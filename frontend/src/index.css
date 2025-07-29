@@ -1,0 +1,19 @@
+/* custom font - nunito */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+/* custom variables to contribute to theme/ elements */
+:root{
+    --default-font: "Nunito", system-ui, Avenir, Helvetica, Arial, sans-serif;
+    --light-primary-fore-color: teal;
+    --light-primary-text-fore-color: #000;
+    --light-primary-back-color: #ededed;
+    --light-secondary-back-color: #f6f6f6;
+    --light-secondary-fore-color: rgb(131, 8, 219);
+}
+
+/* all elements */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: var(--default-font);
+}
