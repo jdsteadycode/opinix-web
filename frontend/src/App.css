@@ -1,0 +1,594 @@
+/* container */
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* header-section */
+.app-header {
+    margin: 6px 0 0 0;
+    background-color: var(--light-primary-back-color);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 300px;
+    padding: 20px;
+    border-radius: 50px 0 0 50px;
+    /* box-shadow: 0px 0px 20px rgba(0, 0, 0, .6); */
+}
+
+/* header-section's title */
+.app-header img {
+    height: 80px;
+    margin: 25px 0 0 0;
+}
+
+
+/* header-section's links (ul) */
+.app-header nav ul {
+    display: flex;
+    gap: 25px;
+    margin-top: 100px;
+    flex-direction: column;
+
+}
+
+.app-header nav ul li {
+    list-style-type: none;
+}
+
+.app-header nav ul li a {
+    font-size: 19px;
+    margin: 0 0px 0px 3px;
+    text-decoration: none;
+    color: var(--light-primary-text-fore-color);
+    transition: opacity 0.15s, font-weight 0.15s;
+    cursor: grab;
+}
+
+.app-header nav ul li a:hover {
+    opacity: 0.8;
+}
+
+.app-header nav ul li a:active {
+    font-weight: bold;
+}
+
+.app-header .auth-btn {
+    position: relative;
+    top: 35%;
+}
+
+.app-header .auth-btn button {
+    padding: 15px 50px;
+    border-radius: 30px;
+    font-size: 18px;
+    cursor: grab;
+    box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.15s, font-weight 0.15s;
+}
+
+.app-header button:active {
+    font-weight: bold;
+    box-shadow: 0px 0px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* open-menu-button */
+.app-header .open-menu-btn {
+  visibility: hidden;   /* initially hide the menu! */
+}
+
+/* responsive-menu section */
+.app-header .responsive-content-menu {
+  height: 0%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: var(--light-primary-back-color);
+  opacity: 0.8;
+  overflow-y: hidden;
+  transition: 0.5s;
+}
+
+.app-header .responsive-content-menu .menu-nav {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.app-header .responsive-content-menu .menu-nav a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: var(--light-primary-text-fore-color);
+  display: block;
+  transition: 0.3s;
+}
+
+.app-header .responsive-content-menu .close-menu-btn {
+    font-size: 50px;
+    background: none;
+    border: none;
+    color: var(--light-primary-text-fore-color);
+    position: absolute;
+    top: 25%;
+    left: 48%;
+}
+
+.app-header .responsive-content-menu .menu-auth-btn {
+  position: relative;
+  top: 34%;
+  text-align: center;
+}
+
+.app-header .responsive-content-menu .menu-auth-btn a button {
+    padding: 15px 50px;
+    border-radius: 30px;
+    font-size: 18px;
+    cursor: grab;
+    box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.15s, font-weight 0.15s;  
+}
+
+/* main section */
+.app-content {
+    width: calc(100vw - 100px);
+    height: calc(100vh - 100px);
+    background-color: var(--light-secondary-back-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 6px 0px 0px 0px;
+    border: 1px solid var(--light-primary-back-color);
+    border-radius: 0 50px 50px 0;
+
+}
+
+/* footer-section */
+.app-footer {
+    background-color: transparent;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* auth-module-section */
+.app-auth-content {
+    width: calc(100vw - 100px);
+    height: calc(100vh - 100px);
+    background-color: var(--light-secondary-back-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 6px 0px 0px 0px;
+    border: 1px solid var(--light-primary-back-color);
+    border-radius: 0 50px 50px 0;
+
+}
+
+/* login-form */
+.app-auth-content .auth-form {
+    /* background: brown; */
+    width: calc(100vw - 650px);
+    max-width: 480px;   /* cannot execeed more than limit: 480px */
+    /* height: calc(100vh - 400px); */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.app-auth-content .auth-form  input {
+    width: 72%;
+    margin: 10px auto;
+    padding: 10px 5px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;  
+}
+
+
+
+.app-auth-content .auth-form input[type="file"] {
+  position: relative;
+}
+
+.app-auth-content .auth-form input[type="file"]::file-selector-button {
+  width: 136px;
+  color: transparent;
+}
+
+/* Faked label styles and icon */
+.app-auth-content .auth-form input[type="file"]::before {
+  top: 17px;
+  left: 16px;
+  pointer-events: none;
+  height: 20px;
+  width: 20px;
+  content: "";
+}
+
+.app-auth-content .auth-form input[type="file"]::after {
+  position: absolute;
+  pointer-events: none;
+  top: 17px;
+  left: 25px;
+  color: var(--light-primary-fore-color);
+  content: "Profile image";
+}
+
+.app-auth-content .auth-form input[type="file"]::file-selector-button {
+  border-radius: 4px;
+  padding: 0 16px;
+  height: 40px;
+  cursor: pointer;
+  background-color: var(--light-primary-back-color);
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+  margin-right: 16px; 
+}
+
+
+.app-auth-content .auth-form input[type="file"]::file-selector-button:hover {
+  background-color: #f3f4f6;
+}
+
+
+.app-auth-content .auth-form input[type="file"]::file-selector-button:active {
+  background-color: #e5e7eb;
+}
+
+
+.app-auth-content .auth-form button {
+    width: 75%;
+    padding: 10px 5px;
+    margin: 6px auto;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: grab;
+    box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.15s, font-weight 0.15s;
+}
+
+.app-auth-content .auth-form .auth-register {
+    position: relative;
+    left: -9%;
+    font-size: 16px;
+}
+
+.app-auth-content .auth-form .auth-register a {
+    text-decoration: none;
+    color: var(--light-primary-fore-color);
+}
+
+.app-auth-content .auth-form  button:active {
+    font-weight: bold;
+    box-shadow: 0px 0px 0 rgba(0, 0, 0, 0.5);
+}
+
+
+/* create-poll module */
+.app-content {
+    width: calc(100vw - 100px);
+    /* height: calc(100vh - 100px); */
+    height: 100vh;
+    background-color: var(--light-secondary-back-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 6px 0px 0px 0px;
+    border: 1px solid var(--light-primary-back-color);
+    border-radius: 0 50px 50px 0;
+
+}
+
+/* create-poll-form */
+.app-content .create-poll-form {
+    /* background: brown; */
+    width: calc(100vw - 560px);
+    max-width: 480px;   /* cannot execeed more than limit: 480px */
+    /* height: calc(100vh - 400px); */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* general inputs [name] */
+.app-content .create-poll-form input {
+    width: 72%;
+    margin: 10px auto;
+    padding: 10px 5px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;  
+}
+
+.app-content .create-poll-form .poll-description {
+  width: 74%;
+}
+
+.app-content .create-poll-form .poll-description label {
+  display: block;
+}
+
+.app-content .create-poll-form .poll-description-text-area {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.app-content .create-poll-form .poll-category {
+    width: 75%;
+    margin: 10px auto;
+    padding: 10px 5px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+}
+
+.app-content .create-poll-form .poll-type {
+    width: 75%;
+    margin: 10px auto;
+    padding: 10px 5px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+}
+
+.app-content .create-poll-form .poll-option-box {
+  width: 74%;
+}
+
+.app-content .create-poll-form .poll-option-box .option {
+  width: 97%;
+}
+
+.app-content .create-poll-form .new-poll-option {
+  width: 74%;
+}
+
+.app-content .create-poll-form .new-poll-option .new-poll-option-button {
+  text-align: left;
+  width: 35%;
+  font-size: 15px;
+  padding: 5px 10px;
+}
+
+.poll-option-wrap {
+  /* position: relative; */
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* poll-option-remove button */
+.poll-option-wrap span {
+  font-size: 20px;
+}
+
+.app-content .create-poll-form button {
+    width: 75%; 
+    padding: 10px 5px;
+    margin: 6px auto;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: grab;
+    box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.15s, font-weight 0.15s;
+}
+
+
+.app-content .create-poll-form  button:active {
+    font-weight: bold;
+    box-shadow: 0px 0px 0 rgba(0, 0, 0, 0.5); 
+}
+
+.app-content .create-poll-form .responsive .responsive-btn{
+    position: relative;
+    left: -46%;
+    border: none;
+    width: 15%;
+    font-size: 32px;
+    box-shadow: none;
+    background: transparent;
+    cursor: pointer;
+    display: none;
+}
+
+
+/* User-Profile section */
+.app-profile-content {
+  display: block;
+}
+
+/* user-profile heading-section */
+.app-profile-content .profile-heading {
+  margin: 0px 15px 15px;
+  /* background-color: lightblue; */
+}
+
+.app-profile-content .profile-heading h1 {
+  font-size: 40px;
+}
+
+.app-profile-content .profile-heading .profile-details {
+  font-size: 18px;
+}
+
+/* user-profile user-analytics section */
+.app-profile-content .profile-analytics-container {
+  margin: 0px 15px 15px;
+  /* background-color: pink; */
+}
+
+.app-profile-content .profile-analytics-container h1 {
+  font-size: 40px;
+}
+
+.app-profile-content .profile-analytics-container .profile-analytic-cards {
+  margin: 0px 0px 0px 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-profile-content .profile-analytics-container .profile-analytic-cards .analytics-card {
+  background: var(--light-secondary-back-color);
+  padding: 20px;
+  border: 1px solid var(--light-primary-text-fore-color);
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* user-profile settings-section */
+.app-profile-content .profile-settings {
+  /* background-color: lightseagreen; */
+  margin: 0px 15px 15px;
+}
+
+.app-profile-content h1 {
+  font-size: 40px;
+}
+
+.app-profile-content .profile-privilleges {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.app-profile-content .profile-privilleges .profile-privillges-button {
+    text-decoration: none;
+    text-align: center;
+    color: var(--light-primary-text-fore-color);
+    width: 20%;
+    padding: 5px 0;
+    border-radius: 5px;
+    border: 1px solid var(--light-primary-text-fore-color);
+    font-size: 16px;
+    cursor: grab;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+    transition: box shadow 0.15s;
+}
+
+.app-profile-content .profile-privilleges .logout {
+  background-color: rgb(255, 230, 230);
+}
+
+.app-profile-content .profile-privilleges .profile-privillges-button:active {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+}
+
+
+
+/* responsive-design */
+/* screen: 1200px (tablets) */
+@media only screen and (max-width: 1200px) {
+  /* body {
+      background-color: #000;
+  } */
+
+  /* whole container */
+  .container {
+    flex-direction: column;
+  }
+  
+  /* container's header-section */
+  .container .app-header {
+    background-color: var(--light-primary-back-color);
+    width: 100%;
+    border-radius: 50px 50px 0 0;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  /* navigation-menu and login-button */
+  .container .app-header 
+  nav,
+  .auth-btn
+   {
+    visibility: hidden;
+   }
+
+  /* open-menu-button */
+  .container .app-header .open-menu-btn {
+    visibility: visible;
+    font-size: 34px;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* tablet-mobile screen menu */
+  .container .responsive-content-menu .menu-nav {
+    visibility: visible;
+  }
+  .container .responsive-content-menu .menu-nav a { 
+    font-size: 30px;
+  }
+  
+  /* authentication-module */
+  .app-auth-content {
+    width: 100%;  
+    border-radius: 0 0 50px 50px
+  }
+  .app-auth-content .auth-form {
+    width: 100%;
+  }
+
+  /* create-poll-form app-content */
+  .app-content {
+    width: 100%;
+    border-radius: 0 0 50px 50px;
+  }
+
+  .app-content .create-poll-form {
+    width: 100%;
+  }
+}
+
+/* screen: 600px (mobile-phones) */
+@media only screen and (max-width: 600px) {
+  /* body {
+    background-color: #000;
+  } */
+
+  /* header section */
+  .container .app-header {
+    height: 60px;
+  }
+  .container .app-header img{
+    height: 60px;
+  }
+
+  .container .app-header .open-menu-btn {
+    font-size: 30px;
+  }
+
+  /* app-content section from create-poll-module */
+  .app-content .create-poll-form .new-poll-option .new-poll-option-button {
+    display: none;
+  }
+  
+  .app-content .create-poll-form .responsive .responsive-btn {
+    display: block;
+  }
+}
+
+/* screen: 600px (ultra-low-screen mobile-phones) */
+@media only screen and (max-width: 400px) {
+
+  /* app-content from Create-Poll-Module */
+  .container .app-content {
+    height: 100%;
+  }
+}
