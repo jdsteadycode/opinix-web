@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./frontend/public/opinix-high-resolution-logo.png" alt="Opinix Logo" width="750" height="375"/>
+  <img src="./frontend/public/opinix-high-resolution-logo.png" alt="Opinix Logo" width="750" height="475"/>
 </p>
 
 ### **🗳️ OPINIX WEB**
@@ -25,7 +25,8 @@ Opinix is built on following technologies so far:-
 
 - _⚒ BACKEND:_
 
-  - _NODE.JS:_ run-time environment for executing poll web on the server. -_EXPRESS.JS:_ (Node.JS Framework) handles the `frontend` of opinix and interacts with the `database` as well.
+  - _NODE.JS:_ run-time environment for executing poll web on the server.
+  - _EXPRESS.JS:_ (Node.JS Framework) handles the `frontend` of opinix and interacts with the `database` as well.
 
 - _🗄 DATABASE:_ (Relational Database Management System) MYSQL for storing and managing the opinix polls data efficiently and easily.
 
