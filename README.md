@@ -6,7 +6,7 @@
 
 _Opinix_ is a secure web based opinion (poll) application, where folks can create and take part in various polls online.
 
-## **📌 WHAT'S IN THERE**
+## **📌 WHAT'S IN THE BOX**
 
 - create polls on various _topics_
 - _Once vote_ per poll.
