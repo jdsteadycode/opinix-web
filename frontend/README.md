@@ -1,12 +1,38 @@
-# React + Vite
+#### _👀 OVERVIEW_
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Following sub-repository is interactive point of _opinx-web_ application.
+It interacts with the `backend` based on `Express.JS + Node.JS`, for fetching or manipulating polls.
+Its based on the following modern technologies i.e.,
 
-Currently, two official plugins are available:
+- HTML
+- CSS
+- React.JS (JavaScript Library)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## _💌 USER STORIES_
 
-## Expanding the ESLint configuration
+- Secure Authentication
+- Poll Creation
+- One-time Poll Vote!
+- Trending Polls
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## _🪜 WALKTRHOUGH:_ (_🚫 FOR TEAM MEMBERS ONLY_)
+
+In-order to execute the `opinix-web`, following steps are needed to get it accomplished:-
+
+1. `clone` this repository into your machine
+
+2. setup and configure the dependencies required (if needed) like `node_modules, vite` etc...
+
+3. `Do` the changes accordingly as needed.
+
+4. `Push` the changes via following:
+
+```bash
+    git checkout -b backend-dev
+    git add .
+    git commit -m "Add backend setup"
+    git push origin backend-dev
+
+```
+
+5. Done
