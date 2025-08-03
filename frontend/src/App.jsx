@@ -1,5 +1,7 @@
 // grab modules
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import { SecuredRoute } from "./components/SecuredRoute.jsx";
 import { Header } from "./components/Header.jsx";
 import { Footer } from "./components/Footer.jsx";
 import { Login } from "./pages/Login.jsx";
@@ -10,12 +12,22 @@ import './App.css';
 // () -> App Component
 function App() {
 
+  // initial state array for authentication
+  const [ isUser, setIsUser ] = useState(!!localStorage.getItem("token"));
+
+  // () -> handle the changes like - logout
+  function handleAuth(incomingStatus) {
+
+    // update the state
+    setIsUser(incomingStatus);
+  }
+
   // return App's HTML
   return (
     <>
     <Router>
       <section className="container">
-          <Header />
+          <Header isUser={isUser} handleAuth={handleAuth} />
             <Routes>
               <Route path="/" element={
                 <main className="app-content">
@@ -23,9 +35,11 @@ function App() {
                     <p>text1</p>
                 </main>
               } />
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<Login handleAuth={handleAuth} />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/create-poll" element={<CreatePoll />} />
+              <Route path="/create-poll" element={
+                <SecuredRoute pages={<CreatePoll />} />
+              } />
           </Routes>
       </section>
      </Router>
