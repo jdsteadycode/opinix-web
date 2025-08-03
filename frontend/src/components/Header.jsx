@@ -1,13 +1,33 @@
 // grab utilities
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../App.css";
 
 // () -> Header Component
-function Header() {
+function Header({ isUser, handleAuth }) {
 
     // initial state array
     const [height, setHeight] = useState("0");
+
+    // for navigation
+    const navigate = useNavigate();
+
+    // () -> authentication of user
+    function handleLogout() {
+        
+        // dismantle the token
+        localStorage.removeItem("token");
+
+        // notify App
+        // update state via prop-function
+        handleAuth(false);
+
+        // navigate to `/login`
+        navigate("/login");
+    }
+
+    // check log**
+    console.log(isUser);
 
     // retun header's jsx
     return(
@@ -35,9 +55,14 @@ function Header() {
 
             {/* <!-- authentication-section --> */}
             <div className="auth-btn" href="#">
-                <Link to="/login"> 
-                    <button>log-in</button>
-                </Link>
+                {isUser
+                    ?
+                    <button onClick={handleLogout}>logout</button>
+                    :
+                    <Link to="/login">
+                        <button>login</button>
+                    </Link>
+                }
             </div>
             {/* <!-- open-menu-icon --> */}
              <button 
@@ -76,9 +101,13 @@ function Header() {
 
                 {/* <!-- authentication-section --> */}
                 <div className="menu-auth-btn">
-                    <Link to="/login">
-                        <button>log-in</button>
-                    </Link>
+                    {isUser ? 
+                        <button onClick={handleLogout}>logout</button>
+                        :
+                        <Link to="/login">
+                            <button>log-in</button>
+                        </Link>
+                    }
                 </div>
              </div>
         </header>
