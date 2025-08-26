@@ -40,6 +40,12 @@ function Header({ isUser, handleAuth }) {
             <nav>
                 <ul>
                     <li>
+                        <i className="ri-chat-poll-line"></i>
+                        <Link to="/">
+                            polls
+                        </Link>
+                    </li>
+                    <li>
                         <i className="ri-sticky-note-add-line"></i>
                         <Link to="/create-poll">
                             create poll
@@ -47,7 +53,9 @@ function Header({ isUser, handleAuth }) {
                     </li>
                     <li>
                         <i className="ri-user-line"></i>
-                        profile
+                        <Link to="/profile">  
+                            profile
+                        </Link>
                     </li>
                     
                 </ul>
@@ -86,14 +94,22 @@ function Header({ isUser, handleAuth }) {
                 <nav className="menu-nav">
                     <ul>
                         <li>
-                            <i className="ri-sticky-note-add-line"></i> 
+                            <Link to="/">
+                                <i className="ri-chat-poll-line"></i>
+                                polls
+                            </Link>
+                        </li>
+                        <li>
                             <Link to="/create-poll">
+                                <i className="ri-sticky-note-add-line"></i> 
                                 create poll
                             </Link>
                         </li>
                         <li>
-                            <i className="ri-user-line"></i>
-                            profile
+                            <Link to="/profile">
+                                <i className="ri-user-line"></i>
+                                profile
+                            </Link>
                         </li>
                         
                     </ul>
