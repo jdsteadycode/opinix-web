@@ -7,6 +7,9 @@ import { Footer } from "./components/Footer.jsx";
 import { Login } from "./pages/Login.jsx";
 import { Register } from "./pages/Register.jsx";
 import { CreatePoll } from "./pages/CreatePoll.jsx";
+import { Profile } from "./pages/Profile.jsx";
+import { Polls } from "./pages/Polls.jsx";
+import { Poll } from "./pages/Poll.jsx";
 import './App.css';
 
 // () -> App Component
@@ -29,16 +32,16 @@ function App() {
       <section className="container">
           <Header isUser={isUser} handleAuth={handleAuth} />
             <Routes>
-              <Route path="/" element={
-                <main className="app-content">
-                    <h1>Hello</h1>
-                    <p>text1</p>
-                </main>
-              } />
+              <Route path="/" element={<Polls />} />
+              <Route path="/poll/:id" element={<Poll />}
+              />
               <Route path="/login" element={<Login handleAuth={handleAuth} />} />
               <Route path="/register" element={<Register />} />
               <Route path="/create-poll" element={
                 <SecuredRoute pages={<CreatePoll />} />
+              } />
+              <Route path="/profile" element={
+                <SecuredRoute pages={<Profile />} />
               } />
           </Routes>
       </section>
