@@ -12,8 +12,6 @@ function Login({handleAuth}) {
         password: ""
     });
 
-    // initial state-array for in-coming user-data from backend
-    let [user, setUser] = useState({});
 
     // initial navigation instance
     let navigate = useNavigate();
