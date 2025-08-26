@@ -23,7 +23,7 @@ Opinix is built on following technologies so far:-
   - _CSS:_ for styling and crafting the poll content
   - _REACT.JS:_ (efficient and suitable JavaScript based Library) for adding interactivity and functionality of the poll content.
 
-- _⚒ BACKEND:_ (NOT FULLY INTEGRATED)
+- _⚒ BACKEND:_ (INTEGRATION IN-PROGRESS)
 
   - _NODE.JS:_ run-time environment for executing poll web on the server.
   - _EXPRESS.JS:_ (Node.JS Framework) handles the requests from `frontend` of opinix and interacts with the `database` and returns the response.
