@@ -10,10 +10,10 @@ Its based on the following modern technologies i.e.,
 
 ## _💌 USER STORIES_
 
-- Secure Authentication
-- Poll Creation
-- One-time Poll Vote!
-- Trending Polls
+- Secure Authentication (initially done)
+- Poll Creation (done)
+- One-time Poll Vote! (in-progress)
+- Trending Polls (in-progress)
 
 ## _🪜 WALKTRHOUGH:_ (_🚫 FOR TEAM MEMBERS ONLY_)
 
