@@ -3,3 +3,12 @@ node_modules
 
 # Do not track environment variables
 .env
+
+# Do not add middleware/upload.js
+middleware/upload.js
+
+# Do not add uploads/
+uploads/
+
+# Do not track insert.js
+insert.js
