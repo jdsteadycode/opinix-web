@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
     // console.log("FILE:", req.file);
 
     // get the client-data from form-body
-    const { email, username, phone, password, confirmPassword, birthdate } = req.body;
+    const { email, username, nickname, bio, phone, password, confirmPassword, gender, birthdate } = req.body;
 
     // initial profile-image
     // let profileImage = null;
@@ -47,11 +47,13 @@ exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // FIRE DML COMMAND
+    // ensured `null` values even if data doesn't completely come...
     await pool.execute(
-      `INSERT INTO users (email, username, phone, password, birthdate)
-       VALUES (?, ?, ?, ?, ?)`,
-      [email, username, phone, hashedPassword, birthdate]
+      `INSERT INTO users (email, username, nickname, bio, phone, password_hash, gender, birthdate)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [email, username, nickname, bio || null, phone || null, hashedPassword, gender || null, birthdate || null]
     );
+
 
     // when successfull
     res.status(201).json({ message: `${username} just got registered`, status: true });
@@ -89,7 +91,7 @@ exports.login = async (req, res) => {
 
     // get the user-data
     const user = rows[0];
-    const isMatch = await bcrypt.compare(password, user.password);    // cross-check the passwords
+    const isMatch = await bcrypt.compare(password, user.password_hash);    // cross-check the passwords
 
     // when passwords didn't match
     if (!isMatch) {
@@ -114,8 +116,6 @@ exports.login = async (req, res) => {
         id: user.id,
         email: user.email,
         username: user.username,
-        phone: user.phone,
-        birthdate: user.birthdate,
       }
     });
       
