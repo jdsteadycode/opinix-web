@@ -39,7 +39,6 @@ exports.me = async (req, res) => {
         });
 
         // fire DQL Query
-        // FIRE DQL QUERY 
         const [rows] = await pool.execute(
         'SELECT * FROM users WHERE email = ?',
             [decoded.email]
@@ -55,6 +54,37 @@ exports.me = async (req, res) => {
         // get the user details
         const user = rows[0];
 
+        // grab the polls user created!
+        const [createdPolls] = await pool.query(
+            `
+            SELECT COUNT(*) AS created_count 
+            FROM polls 
+            WHERE user_id = ?
+            `,
+            [user.id]
+        );
+
+        // grab the polls voted!
+        const [votedPolls] = await pool.query(
+            `
+            SELECT COUNT(DISTINCT poll_id) AS voted_count
+            FROM votes
+            WHERE user_id = ?
+            `,
+            [user.id]
+        );
+
+        // grab the total votes on created polls
+        const [totalVotes] = await pool.query(
+            `
+            SELECT COUNT(*) as total_votes
+            FROM votes
+            INNER JOIN polls ON (votes.poll_id = polls.id)
+            WHERE polls.user_id = ?
+            `,
+            [user.id]
+        );
+
         // when fetch successfull
         res.json({
             message: 'Verfication Passed',
@@ -68,12 +98,68 @@ exports.me = async (req, res) => {
                 phone: user.phone,
                 gender: user.gender,
                 birthdate: user.birthdate,
+                profileImage: user.profile_image,
+                stats: {
+                    "createdPolls": createdPolls[0].created_count,
+                    "votedPolls": votedPolls[0].voted_count,
+                    "totalVotes": totalVotes[0].total_votes,
+                }
             }
         });
     }
 
     // handle run-time error1
     catch(error) {
-        return res.status(500).json({"message": "Server Error"});
+        return res.status(500).json({"message": "Server Error", "error": error});
     }
 }
+
+// () -> update the profile!
+exports.updateMe = async (req, res) => {
+    // grab the data for update
+    const { id, nickname, bio, gender, phone, birthdate} = req.body;
+
+    try {
+        // check log**
+        console.log(id, nickname, bio, phone, gender, birthdate);
+
+        // initial DML command
+        let updatedCommand = `
+            UPDATE users
+            SET nickname = ?, bio = ?, gender = ?, birthdate = ?, phone = ?
+        `;
+
+        // initial values
+        let params = [nickname, bio, gender, birthdate, phone];
+
+        // when image is available for update
+        if (req.file) {
+            profileImage = req.file.filename;
+            updatedCommand += `, profile_image = ?`;
+            params.push(profileImage);
+        }
+
+        // attach id for update
+        updatedCommand += ` WHERE id = ?`;
+        params.push(id);
+
+        // execute the update
+        const [updateOutcome] = await pool.query(updatedCommand, params);
+
+        // fetch updated profile
+        const [updatedUser] = await pool.query(
+            `SELECT id, email, username, nickname, bio, gender, phone, birthdate, profile_image 
+             FROM users 
+             WHERE id = ?`,
+            [id]
+        );
+
+        res.json({
+            message: "Updated!",
+            user: updatedUser[0],
+        });
+    } catch (error) {
+        return res.status(500).json({ message: "Server Error", error });
+    }
+};
+

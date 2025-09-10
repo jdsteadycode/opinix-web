@@ -8,20 +8,20 @@ exports.register = async (req, res) => {
   try {
     // log** details
     console.log("BODY:", req.body);
-    // console.log("FILE:", req.file);
+    console.log("FILE:", req.file);
 
     // get the client-data from form-body
     const { email, username, nickname, bio, phone, password, confirmPassword, gender, birthdate } = req.body;
 
     // initial profile-image
-    // let profileImage = null;
+    let profileImage = null;
 
     // check for the file?
-    // if (req.file) {
+    if (req.file) {
 
-    //   // if so then get the file via body
-    //   profileImage = req.file.filename;
-    // }
+      // if so then get the file via body
+      profileImage = req.file.filename;
+    }
 
     // when password doesn't match*
     if (password !== confirmPassword) {
@@ -49,9 +49,9 @@ exports.register = async (req, res) => {
     // FIRE DML COMMAND
     // ensured `null` values even if data doesn't completely come...
     await pool.execute(
-      `INSERT INTO users (email, username, nickname, bio, phone, password_hash, gender, birthdate)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [email, username, nickname, bio || null, phone || null, hashedPassword, gender || null, birthdate || null]
+      `INSERT INTO users (email, username, nickname, bio, phone, password_hash, gender, birthdate, profile_image)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [email, username, nickname || username, bio || null, phone || null, hashedPassword, gender || null, birthdate || null, profileImage]
     );
 
 
@@ -105,7 +105,7 @@ exports.login = async (req, res) => {
     const token = jwt.sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: '1h' }
+      { expiresIn: '27d' }
     );
 
     // when user-auth successfull
@@ -126,3 +126,4 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
