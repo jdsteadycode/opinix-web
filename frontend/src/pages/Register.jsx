@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 function Register() {
 
     // initial state array
-    const [inputType, setInputType] = useState("text");
+    // const [inputType, setInputType] = useState("text");
 
     // initial navigation
     const navigate = useNavigate();
@@ -19,17 +19,21 @@ function Register() {
         "phone": "",
         "password": "",
         "confirmPassword": "",
-        "birthdate": "",
+        // "birthdate": "",
+        "profileImage": null,
     });
 
-    // () -> handle the input type when focused!
-    function handleInputFocusTextChange(event) {
-        // check log**
-        // console.log(inputType);
+    // initial state array for error
+    const [error, setError] = useState(null);
 
-        // update the input's type!
-        setInputType("date");
-    }
+    // () -> handle the input type when focused!
+    // function handleInputFocusTextChange(event) {
+    //     // check log**
+    //     // console.log(inputType);
+
+    //     // update the input's type!
+    //     setInputType("date");
+    // }
 
     // () -> track the form data changes
     function handleFormData(event) {
@@ -37,8 +41,12 @@ function Register() {
         // a new copy of fregistration data
         let data = { ...userData };
 
-        // set the data
-        data[event.target.name] = event.target.value;
+        // set the data accordingly..
+        if (event.target.type === "file") {
+            data[event.target.name] = event.target.files[0];
+        } else {
+            data[event.target.name] = event.target.value;
+        }
 
         // update the state
         setUserData(data);
@@ -46,17 +54,57 @@ function Register() {
 
     // () -> handle user registration
     async function handleRegistration(event) {
-
         // restrict re-render
         event.preventDefault();
 
+        // check inputs*
+        if(userData.email === "" || userData.username === "" || userData.phone === "" || userData.password === "" || userData.confirmPassword === "") {
+
+            // update the state**
+            return setError("All details are required*");
+        }
+
+        // check for email
+        else if(!/\S+@\S+\.\S+/.test(userData.email)) {
+
+            // update the state*
+            return setError("Enter a valid E-mail please..");
+        }
+
+        // check for phone number!
+        else if(isNaN((userData.phone))) {
+
+            // update the state*
+            return setError("Phone number should be a valid number!");
+        }
+        else if(userData.phone.length !== 10) {
+
+            // update the state*
+            return setError("Phone number must be of exact 10 digits")
+        }
+
+        // verify the both passwords!
+        else if(userData.password !== userData.confirmPassword) {
+
+            // update the state**
+            return setError("Entered passwords didn't appear to be same!");
+        }
+
+
         // try to register the new user
         try {
+
+            // set the input as formData because of file!
+            let formData = new FormData();
+            Object.keys(userData).forEach(key => {
+                // each data should be accordingly set within key!
+                formData.append(key, userData[key]);
+            });
+
             // response from the server
             let response = await fetch(`http://localhost:5000/api/auth/register`, {
                 "method": "POST",
-                "headers": {"Content-Type": "application/json"},
-                "body": JSON.stringify(userData)
+                "body": formData,
             });
 
             // parse the response from json
@@ -65,8 +113,12 @@ function Register() {
             // check log**
             console.log(data);
 
+            
            // check if user is created
             if(data.status) {
+
+                // update the state*
+                setError(null);
 
                 // navigate the user to `/login`
                 navigate("/login")
@@ -86,19 +138,26 @@ function Register() {
     // return jsx!
     return(
          <main className="app-auth-content">
-            <form className="auth-form" onSubmit={handleRegistration}>
+            <form className="auth-form" encType="multipart/form-data" onSubmit={handleRegistration}>
                 <h1>Welcome folk!</h1>
                 <input type="text" name="email" placeholder="Your Email?" onChange={handleFormData} />
                 <input type="text" name="username" placeholder="Your username?" onChange={handleFormData} />
                 <input type="text" name="phone" placeholder="Your phone-number?" onChange={handleFormData} />
                 <input type="password" name="password" placeholder="Your password?" onChange={handleFormData} />
                 <input type="password" name="confirmPassword" placeholder="Confrim password?" onChange={handleFormData} /> 
-                <input 
+                {/* <input 
                     type={inputType}
                     name="birthdate"
                     placeholder="Your DOB?" 
                     onChange={handleFormData}
-                    onFocus={handleInputFocusTextChange} />
+                    onFocus={handleInputFocusTextChange} /> */}
+                <input 
+                    type="file" 
+                    name="profileImage" 
+                    accept="image/*"
+                    onChange={handleFormData} 
+                />
+
                 <p className="auth-register">
                     I have one!
                     <Link to="/login">
@@ -107,6 +166,9 @@ function Register() {
                 </p>
                 <button type="submit">register</button>
             </form>
+
+            {/* when error */}
+            {error && <p style={{"color": "crimson"}}>{error}</p>}
         </main>
     );
 }
