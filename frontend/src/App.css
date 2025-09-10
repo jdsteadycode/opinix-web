@@ -543,7 +543,115 @@
   box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
 }
 
-/* Polls Component/ Section */
+
+/* Update Profile Sub Section (Model) < Profile Component */
+/* ======================
+   Profile Update Modal
+   ====================== */
+
+/* Overlay background (blur + darken) */
+.profile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+/* Modal box */
+.profile-modal {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  width: 100%;
+  max-width: 450px;
+  animation: fadeInScale 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Modal heading */
+.profile-modal h2 {
+  margin-bottom: 10px;
+  font-size: 22px;
+  text-align: center;
+}
+
+/* Inputs */
+.profile-modal input,
+.profile-modal select {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.profile-modal input:focus,
+.profile-modal select:focus {
+  border-color: var(--light-primary-back-color);
+}
+
+/* Action buttons */
+.profile-modal .modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.profile-modal button {
+  flex: 1;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: grab;
+  transition: background 0.2s;
+}
+
+.profile-modal .save-btn {
+  background: var(--light-primary-back-color);
+  color: var(--light-primary-text-fore-color);
+  border: none;
+}
+
+.profile-modal .cancel-btn {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+}
+
+.profile-modal .cancel-btn:hover {
+  background: #eee;
+}
+
+/* Animation */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+
+
+/*************************** 
+  Polls Component/ Section 
+****************************/
 .app-content  .polls-page {
   display: block;           /* remove flexbox here */
   padding: 40px 20px;
