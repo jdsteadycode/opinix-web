@@ -4,7 +4,7 @@ import { useState } from "react";
 import "../App.css";
 
 // () -> Header Component
-function Header({ isUser, handleAuth }) {
+function Header({ isUser, handleAuth, handleId }) {
 
     // initial state array
     const [height, setHeight] = useState("0");
@@ -21,6 +21,7 @@ function Header({ isUser, handleAuth }) {
         // notify App
         // update state via prop-function
         handleAuth(false);
+        handleId(null);
 
         // navigate to `/login`
         navigate("/login");
