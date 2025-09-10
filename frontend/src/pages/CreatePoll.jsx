@@ -124,15 +124,15 @@ function CreatePoll() {
         const user_id = parseJwt(localStorage.getItem("token"))?.id;
         console.log(user_id);
         // initial form-data
-        const formData = new FormData();
+        let formData = new FormData();
 
         // grab values from form inputs
-        const title = event.target.title.value;
-        const description = event.target.description.value;
-        const category_name = event.target.category.value;
-        const pollType = event.target.type.value === "Single Choice" ? "single" : "multi";
-        const allow_comments = event.target["allow-comments"].value;
-        const max_choices = pollOptions.length;
+        let title = event.target.title.value;
+        let description = event.target.description.value;
+        let category_name = event.target.category.value;
+        let pollType = event.target.type.value === "Single Choice" ? "single" : "multi";
+        let allow_comments = event.target["allow-comments"].value;
+        let max_choices = pollOptions.length;
         let expires_at = event.target.expiryDate.value; 
 
          // Basic validation
@@ -208,7 +208,7 @@ function CreatePoll() {
             console.log("✅ Poll created:", data);
 
             // reset the form*
-            formData.reset();
+            formData = new FormData();
 
             // update the options state**
             setPollOptions([
