@@ -16,37 +16,49 @@ import './App.css';
 function App() {
 
   // initial state array for authentication
-  const [ isUser, setIsUser ] = useState(!!localStorage.getItem("token"));
+  const [isUser, setIsUser] = useState(!!localStorage.getItem("token"));
+  const [id, setId] = useState(null);
 
-  // () -> handle the changes like - logout
+  // () -> handle the incoming changes logout/ un-set or set id!
   function handleAuth(incomingStatus) {
 
     // update the state
     setIsUser(incomingStatus);
   }
+  function handleId(incomingId) {
+
+    // update the state
+    setId(incomingId);
+
+    // check log**
+    console.log(id);
+  }
+
+  // check log**
+  console.log(id);
 
   // return App's HTML
   return (
     <>
-    <Router>
-      <section className="container">
-          <Header isUser={isUser} handleAuth={handleAuth} />
-            <Routes>
-              <Route path="/" element={<Polls />} />
-              <Route path="/poll/:id" element={<Poll />}
-              />
-              <Route path="/login" element={<Login handleAuth={handleAuth} />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/create-poll" element={
-                <SecuredRoute pages={<CreatePoll />} />
-              } />
-              <Route path="/profile" element={
-                <SecuredRoute pages={<Profile />} />
-              } />
+      <Router>
+        <section className="container">
+          <Header isUser={isUser} handleAuth={handleAuth} handleId={handleId} />
+          <Routes>
+            <Route path="/" element={<Polls />} />
+            <Route path="/poll/:id" element={<Poll user_id={id} />}
+            />
+            <Route path="/login" element={<Login handleAuth={handleAuth} handleId={handleId} />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/create-poll" element={
+              <SecuredRoute pages={<CreatePoll />} />
+            } />
+            <Route path="/profile" element={
+              <SecuredRoute pages={<Profile />} />
+            } />
           </Routes>
-      </section>
-     </Router>
-     <Footer />
+        </section>
+      </Router>
+      <Footer />
     </>
   )
 }
