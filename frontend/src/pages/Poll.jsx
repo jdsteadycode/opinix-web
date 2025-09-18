@@ -245,35 +245,23 @@ function Poll({ user_id }) {
                 {/* Poll's Options */}
                 <form onSubmit={(e) => e.preventDefault()}>
                     {pollDetails.options?.map((opt) => (
-                    <div key={opt.id} className="poll-option-wrap">
+                    <div key={opt.id} className="radio-item">
                         <input
                             type={pollDetails.poll_type === "single" ? "radio" : "checkbox"}
                             name="poll-options"
                             onChange={() => handleOptionChange(opt.id)}
                             checked={selectedOptions.includes(opt.id)}
+                            id={`opt-${opt.id}`}
                         />
-                        <label>{opt.text}</label>
-
-                        {/* show up Image if present! along side of option */}
+                        <label htmlFor={`opt-${opt.id}`}>{opt.text}</label>
                         {opt.media && opt.media.type === "Image" && (
                             <img
-                                src={`http://localhost:5000${opt.media.url}`} 
-                                alt={opt.text}
-                                className="poll-option-media"
-                                style={{ width: "100px", display: "block", marginTop: "8px" }}
+                            src={`http://localhost:5000${opt.media.url}`}
+                            alt={opt.text}
+                            className="poll-option-media"
                             />
                         )}
-
-                        {/* show up Video if present along side of option */}
-                        {opt.media && opt.media.type === "Video" && (
-                            <video
-                                controls
-                                src={`http://localhost:5000${opt.media.url}`}
-                                className="poll-option-media"
-                                style={{ maxWidth: "300px", display: "block", marginTop: "8px" }}
-                            />
-                        )}
-                    </div>
+                        </div>
                     ))}
                     <button
                         className="create-btn"
