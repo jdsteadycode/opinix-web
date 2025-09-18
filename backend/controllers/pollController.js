@@ -298,3 +298,59 @@ exports.singlePoll = async (request, response) => {
     }
 
 }
+
+
+// poll stats
+exports.fetchPollStats = async (request, response) => {
+
+    // safe
+    try {
+        // grab the poll-id!
+        const { id } = request.body; 
+        
+        // check log**
+        // console.log(id);
+
+        // grab poll stats
+        let [pollResult] = await pool.query(
+            `   
+                SELECT poll_options.id AS option_id, poll_options.option_text, COUNT(vote_choices.id) AS votes_count
+                FROM poll_options
+                LEFT JOIN vote_choices ON (poll_options.id = vote_choices.option_id)
+                LEFT JOIN votes ON (vote_choices.vote_id = votes.id)
+                WHERE poll_options.poll_id = ?
+                GROUP BY poll_options.id, poll_options.option_text
+                ORDER BY poll_options.id ASC;
+            `,
+            [id]
+        );
+
+        // check log**
+        console.log(pollResult);
+
+        // set the total votes 
+        const totalVotes = pollResult.reduce((sum, option) => sum += option.votes_count, 0);
+
+        // set vote-result
+        const voteSummary = pollResult.map((option) => ({
+            "option_text": option.option_text,
+            "votes_count": option.votes_count,
+        }));
+
+        // send the polls-data to Frontend/ Client
+        response.json({
+            totalVotes,
+            voteSummary
+        });
+
+    }
+    catch(error) {
+
+        // show error
+        console.error(error);
+
+        // send http response to frontend
+        response.status(500).json({ "message": "Poll-stats fetch failed!" })
+    }
+
+}
