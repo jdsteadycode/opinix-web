@@ -1,138 +1,176 @@
-/* container */
+/* body */
+body {
+    background-color: var(--primary-back-color);
+    color: var(--primary-text-color);
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================
+   2. Container & Header
+========================= */
+
+/* main container wrapping header + content */
 .container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background-color: var(--primary-back-color);
 }
 
-/* header-section */
+/* Header section */
 .app-header {
-    margin: 6px 0 0 0;
-    background-color: var(--light-primary-back-color);
-    display: flex;
-    align-items: center;
-    flex-direction: column;
     width: 300px;
-    padding: 20px;
-    border-radius: 50px 0 0 50px;
-    /* box-shadow: 0px 0px 20px rgba(0, 0, 0, .6); */
+    /* min-height: 100vh; */
+    background-color: var(--secondary-back-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 15px;
+    border-radius: 0 30px 30px 0;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 10;
 }
 
-/* header-section's title */
+/* Header logo/image */
 .app-header img {
     height: 80px;
-    margin: 25px 0 0 0;
+    margin: 25px 0;
+    border-radius: 10px;
 }
 
-
-/* header-section's links (ul) */
+/* Header navigation links */
 .app-header nav ul {
     display: flex;
-    gap: 25px;
-    margin-top: 100px;
     flex-direction: column;
-
+    gap: 25px;
+    margin-top: 60px;
 }
 
 .app-header nav ul li {
-    list-style-type: none;
+    list-style: none;
 }
 
 .app-header nav ul li a {
-    font-size: 19px;
-    margin: 0 0px 0px 3px;
+    font-size: 18px;
+    color: var(--primary-text-color);
     text-decoration: none;
-    color: var(--light-primary-text-fore-color);
-    transition: opacity 0.15s, font-weight 0.15s;
-    cursor: grab;
+    transition: all 0.3s ease;
 }
 
 .app-header nav ul li a:hover {
-    opacity: 0.8;
+    color: var(--primary-back-color);
+    background-color: var(--primary-fore-color);
+    padding: 5px 12px;
+    border-radius: 8px;
 }
 
-.app-header nav ul li a:active {
-    font-weight: bold;
-}
-
+/* Auth button inside header */
 .app-header .auth-btn {
-    position: relative;
-    top: 35%;
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .app-header .auth-btn button {
-    padding: 15px 50px;
-    border-radius: 30px;
-    font-size: 18px;
-    cursor: grab;
-    box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.5);
-    transition: box-shadow 0.15s, font-weight 0.15s;
+    padding: 12px 35px;
+    border-radius: 25px;
+    font-size: 16px;
+    background-color: var(--primary-fore-color);
+    color: var(--primary-back-color);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.app-header button:active {
-    font-weight: bold;
-    box-shadow: 0px 0px 0 rgba(0, 0, 0, 0.5);
+.app-header .auth-btn button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
 }
 
-/* open-menu-button */
+/* Responsive menu button */
 .app-header .open-menu-btn {
-  visibility: hidden;   /* initially hide the menu! */
+    display: none;
+    font-size: 34px;
+    background: none;
+    border: none;
+    color: var(--primary-fore-color);
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 /* responsive-menu section */
 .app-header .responsive-content-menu {
-  height: 0%;
+  height: 0;
   width: 100%;
   position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: var(--light-primary-back-color);
-  opacity: 0.8;
-  overflow-y: hidden;
-  transition: 0.5s;
+  top: 0; left: 0;
+  background-color: rgba(55,55,55,0.95);
+  backdrop-filter: blur(8px);            
+  overflow: hidden;
+  transition: height 0.4s ease;        
+  z-index: 1000;
 }
 
+
 .app-header .responsive-content-menu .menu-nav {
-  position: relative;
-  top: 25%;
+  position: absolute;
+  top: 35%;
   width: 100%;
   text-align: center;
-  margin-top: 30px;
 }
 
 .app-header .responsive-content-menu .menu-nav a {
-  padding: 8px;
-  text-decoration: none;
-  font-size: 36px;
-  color: var(--light-primary-text-fore-color);
   display: block;
-  transition: 0.3s;
+  padding: 10px;
+  font-size: 24px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.app-header .responsive-content-menu .menu-nav a:hover {
+  background: none !important;  /* Remove any background */
+  color: inherit !important;    /* Keep original text color */
 }
 
 .app-header .responsive-content-menu .close-menu-btn {
-    font-size: 50px;
+    position: absolute;
+    top: 20px; right: 30px; 
+    font-size: 40px;
     background: none;
     border: none;
-    color: var(--light-primary-text-fore-color);
-    position: absolute;
-    top: 25%;
-    left: 48%;
+    color: #29fd53; 
+    cursor: pointer;
 }
 
 .app-header .responsive-content-menu .menu-auth-btn {
-  position: relative;
-  top: 34%;
+  position: absolute;
+  bottom: 20%;
+  width: 100%;
   text-align: center;
 }
 
 .app-header .responsive-content-menu .menu-auth-btn button {
-    padding: 15px 50px;
+    padding: 12px 40px;
     border-radius: 30px;
     font-size: 18px;
-    cursor: grab;
-    box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.5);
-    transition: box-shadow 0.15s, font-weight 0.15s;  
+    cursor: pointer;
+    background-color: #29fd53;
+    color: #000;
+    border: none;
+    transition: transform 0.2s;
 }
+.app-header .responsive-content-menu .menu-auth-btn button:hover {
+  transform: scale(1.05);
+}
+
 
 /* main section */
 /*
@@ -177,118 +215,144 @@
 
 /* auth-module-section */
 .app-auth-content {
-    width: calc(100vw - 100px);
-    height: calc(100vh - 100px);
-    background-color: var(--light-secondary-back-color);
+    width: calc(100vw - 300px); /* same as content space beside header */
+    min-height: 100vh;           /* fill same height as header */
+    background: rgba(55, 55, 55, 0.9);
+    backdrop-filter: blur(12px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 6px 0px 0px 0px;
-    border: 1px solid var(--light-primary-back-color);
+    margin: 0;                   /* remove extra margin */
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 0 50px 50px 0;
-
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    overflow-y: auto;    
 }
 
-/* login-form */
+/* Form container */
 .app-auth-content .auth-form {
-    /* background: brown; */
-    width: calc(100vw - 650px);
-    max-width: 480px;   /* cannot execeed more than limit: 480px */
-    /* height: calc(100vh - 400px); */
+    width: 100%;
+    max-width: 410px;
+    padding: 30px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 30px;
 }
 
+/* Form heading */
+.app-auth-content .auth-form h1 {
+    font-size: 32px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-.app-auth-content .auth-form  input {
-    width: 72%;
-    margin: 10px auto;
-    padding: 10px 5px;
-    font-size: 18px;
+/* Input wrapper for label + input */
+.app-auth-content .auth-form .input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 25px 0;
+    border-bottom: 2px solid #162938;
+}
+
+/* Floating label effect */
+.app-auth-content .auth-form .input-box label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    pointer-events: none;
+    transition: 0.4s;
+}
+
+.app-auth-content .auth-form .input-box input:focus ~ label,
+.app-auth-content .auth-form .input-box input:valid ~ label {
+    top: -8px;
+    font-size: 14px;
+    color: #29fd53;  /* accent color */
+}
+
+/* Input field styles */
+.app-auth-content .auth-form .input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
     border: none;
-    border-radius: 5px;  
+    outline: none;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+    padding: 0 35px 0 5px;
 }
 
-
-
-.app-auth-content .auth-form input[type="file"] {
-  position: relative;
-}
-
+/* File input styling */
 .app-auth-content .auth-form input[type="file"]::file-selector-button {
-  width: 136px;
-  color: transparent;
+    border-radius: 4px;
+    padding: 0 16px;
+    height: 40px;
+    cursor: pointer;
+    background-color: #162938;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-right: 16px;
 }
-
-/* Faked label styles and icon */
-.app-auth-content .auth-form input[type="file"]::before {
-  top: 17px;
-  left: 16px;
-  pointer-events: none;
-  height: 20px;
-  width: 20px;
-  content: "";
-}
-
-.app-auth-content .auth-form input[type="file"]::after {
-  position: absolute;
-  pointer-events: none;
-  top: 17px;
-  left: 25px;
-  color: var(--light-primary-fore-color);
-  content: "Profile image";
-}
-
-.app-auth-content .auth-form input[type="file"]::file-selector-button {
-  border-radius: 4px;
-  padding: 0 16px;
-  height: 40px;
-  cursor: pointer;
-  background-color: var(--light-primary-back-color);
-  border: 1px solid rgba(0, 0, 0, 0.16);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
-  margin-right: 16px; 
-}
-
 
 .app-auth-content .auth-form input[type="file"]::file-selector-button:hover {
-  background-color: #f3f4f6;
+    background-color: #29fd53;
+    color: #000;
 }
 
-
-.app-auth-content .auth-form input[type="file"]::file-selector-button:active {
-  background-color: #e5e7eb;
-}
-
-
+/* Buttons */
 .app-auth-content .auth-form button {
-    width: 75%;
-    padding: 10px 5px;
-    margin: 6px auto;
-    border-radius: 5px;
-    font-size: 18px;
-    cursor: grab;
-    box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.5);
-    transition: box-shadow 0.15s, font-weight 0.15s;
+    width: 100%;
+    height: 45px;
+    background-color: #29fd53;
+    color: #000;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    margin-top: 12px;
 }
 
+.app-auth-content .auth-form button:hover {
+    background-color: #1ad53f;
+    transform: scale(1.03);
+}
+
+/* Register link */
 .app-auth-content .auth-form .auth-register {
-    position: relative;
-    left: -9%;
-    font-size: 16px;
+    font-size: 0.9em;
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .app-auth-content .auth-form .auth-register a {
+    color: #29fd53;
+    font-weight: 600;
     text-decoration: none;
-    color: var(--light-primary-fore-color);
 }
 
-.app-auth-content .auth-form  button:active {
-    font-weight: bold;
-    box-shadow: 0px 0px 0 rgba(0, 0, 0, 0.5);
+.app-auth-content .auth-form .auth-register a:hover {
+    text-decoration: underline;
+}
+
+/* Error / message styling */
+.app-auth-content .auth-form .message {
+    font-size: 14px;
+    color: #f67271;
+    margin-bottom: 14px;
 }
 
 
@@ -305,259 +369,280 @@
     align-items: center;
 }
 */
+/* === CREATE POLL DARK THEME === */
 .app-content .create-poll-form {
-  background: #fff;
+  background: rgba(55, 55, 55, 0.9);
+  backdrop-filter: blur(12px);
   width: 100%;
-  max-width: 480px;          /* card look */
-  margin: 20px auto;
+  max-width: 480px;
+  margin: 40px auto;
   padding: 30px 25px;
-  border-radius: 15px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, .5);
 }
 
 /* Heading */
 .app-content .create-poll-form h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
+  font-size: 32px;
   text-align: center;
-  color: var(--light-primary-text-fore-color);
+  margin-bottom: 10px;
+  color: #fff;
 }
 
-/* Inputs, select, textarea */
-.app-content .create-poll-form input,
-.app-content .create-poll-form select,
-.app-content .create-poll-form textarea {
+/* === INPUT BOX WITH FLOATING LABEL === */
+.app-content .create-poll-form .input-box {
+  position: relative;
   width: 100%;
-  box-sizing: border-box;
-  margin: 8px 0;
-  padding: 12px 14px;
+  margin-top: 20px;
+}
+.app-content .create-poll-form .input-box input,
+.app-content .create-poll-form .input-box select,
+.app-content .create-poll-form .input-box textarea {
+  width: 100%;
+  padding: 14px 10px 6px 10px;
   font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #888;
+  color: #fff;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.3s;
+}
+.app-content .create-poll-form .input-box label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: #aaa;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.app-content .create-poll-form .input-box input:focus ~ label,
+.app-content .create-poll-form .input-box textarea:focus ~ label,
+.app-content .create-poll-form .input-box input:valid ~ label,
+.app-content .create-poll-form .input-box textarea:valid ~ label {
+  top: -8px;
+  font-size: 12px;
+  color: #29fd53;
+}
+.app-content .create-poll-form .input-box input:focus,
+.app-content .create-poll-form .input-box textarea:focus {
+  border-color: #29fd53;
 }
 
-.app-content .create-poll-form textarea {
-  min-height: 100px;
-  resize: vertical;
+.app-content .create-poll-form .input-box select {
+  color: var(--light-primary-text-fore-color);
+  background-color: var(--secondary-back-color);
 }
 
-/* Focus effect */
-.app-content .create-poll-form input:focus,
-.app-content .create-poll-form select:focus,
-.app-content .create-poll-form textarea:focus {
-  border-color: var(--light-primary-back-color);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
-}
-
-/* Poll options row */
+/* === POLL OPTIONS === */
 .poll-option-wrap {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 10px;
+  margin-top: 12px;
 }
-
 .poll-option-wrap input[type="text"] {
   flex: 1;
-  min-width: 0;
+  border-bottom: 2px solid #888;
+  background: transparent;
+  color: #fff;
 }
-
 .file-upload-icon {
-  flex-shrink: 0;
-  font-size: 20px;
   cursor: pointer;
+  font-size: 20px;
+  color: #ccc;
   transition: color 0.2s;
 }
-
 .file-upload-icon:hover {
-  color: #000;
+  color: #29fd53;
 }
-
-/* Remove option button */
 .poll-option-wrap span {
   cursor: pointer;
   color: crimson;
   font-size: 20px;
 }
 
-/* Add new option button */
+/* === ADD OPTION BUTTON === */
 .new-poll-option .new-poll-option-button {
-  background: var(--light-primary-back-color);
-  color: var(--light-primary-text-fore-color);
+  margin-top: 10px;
+  background: #29fd53;
+  color: #000;
   border: none;
-  border-radius: 6px;
+  border-radius: 25px;
   padding: 8px 12px;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.3s;
+  display: block;
 }
-
 .new-poll-option .new-poll-option-button:hover {
-  background: #eee;
+  background: #1ad53f;
 }
 
-/* create-poll section create-button */
-.app-content .create-poll-form .create-btn {
-    width: 100%;
-    padding: 10px 5px;
-    margin: 6px auto;
-    border-radius: 5px;
-    font-size: 18px;
-    cursor: grab;
-    box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.5);
-    transition: box-shadow 0.15s, font-weight 0.15s;
-}
-
-
-.app-content .create-poll-form  .create-btn:active {
-    font-weight: bold;
-    box-shadow: 0px 0px 0 rgba(0, 0, 0, 0.5);
-}
-
-/* create-poll section input error */
-.app-content .create-poll-form .error {
-  color: crimson;
-}
-
-
-/* Responsive add-option button */
-.app-content .create-poll-form .responsive .responsive-btn {
-  position: relative;
-  left: 0;
-  border: none;
-  width: 40px;
-  font-size: 32px;
-  box-shadow: none;
-  background: transparent;
-  cursor: pointer;
+.new-poll-option .responsive {
   display: none;
 }
 
-/* Comments radio group */
+/* === CREATE BUTTON === */
+.create-btn {
+  width: 100%;
+  padding: 12px;
+  background: #29fd53;
+  color: #000;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+.create-btn:hover {
+  background: #1ad53f;
+}
+.create-btn:active {
+  transform: scale(0.97);
+}
+
+/* === COMMENTS RADIO GROUP === */
 .poll-comments {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 12px 0;
   font-size: 14px;
+  margin-top: 12px;
 }
-
 .poll-comments label {
   font-weight: 500;
 }
 
-.poll-comments input[type="radio"] {
-  margin: 0;
+/* === ERROR TEXT === */
+.app-content .create-poll-form .error {
+  color: crimson;
+  font-size: 13px;
+  margin-top: 4px;
+  display: block;
 }
 
-.poll-comments input[type="radio"] + label {
-  margin-right: 15px;
-}
+
 
 /* User-Profile section */
+/* =======================
+   USER PROFILE THEME UPDATE
+   ======================= */
+
+/* Profile container – glass effect with dark overlay */
 .app-profile-content {
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 50px;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 50px;
+  background: rgba(55, 55, 55, 0.85); /* UPDATED: dark glass */
+  backdrop-filter: blur(12px);        /* UPDATED: blurred glass effect */
+  padding: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.2); /* UPDATED: subtle white border */
+  border-radius: 20px; /* UPDATED */
+  box-shadow: 0 0 30px rgba(0,0,0,0.5); /* UPDATED */
+  color: #fff; /* UPDATED: white text default */
 }
 
-/* user-profile heading-section */
-.app-profile-content .profile-heading {
+/* Section headings */
+.app-profile-content .profile-heading,
+.app-profile-content .profile-analytics-container,
+.app-profile-content .profile-settings {
   margin: 0px 15px 15px;
-  /* background-color: lightblue; */
 }
 
-.app-profile-content .profile-heading h1 {
+.app-profile-content .profile-heading h1,
+.app-profile-content .profile-analytics-container h1,
+.app-profile-content h1 {
   font-size: 40px;
+  color: #29fd53; /* UPDATED: accent heading color */
 }
 
+/* Profile details text */
 .app-profile-content .profile-heading .profile-details {
   font-size: 18px;
+  color: #fff; /* UPDATED */
 }
 
-/* user-profile user-analytics section */
-.app-profile-content .profile-analytics-container {
-  margin: 0px 15px 15px;
-  /* background-color: pink; */
-}
-
-.app-profile-content .profile-analytics-container h1 {
-  font-size: 40px;
-}
-
+/* Analytics section cards */
 .app-profile-content .profile-analytics-container .profile-analytic-cards {
   margin: 0px 0px 0px 5px;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap; /* UPDATED: wrap for smaller screens */
+  gap: 25px; /* UPDATED: spacing */
 }
 
 .app-profile-content .profile-analytics-container .profile-analytic-cards .analytics-card {
-    background: var(--light-secondary-back-color);
-    margin: 0 100px 0 0;
-    padding: 10px 10px;
-    border: 1px solid var(--light-primary-text-fore-color);
-    border-radius: 5px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.05); /* UPDATED: semi-transparent */
+  padding: 15px 20px;
+  border: 1px solid rgba(255,255,255,0.2); /* UPDATED */
+  border-radius: 12px; /* UPDATED */
+  box-shadow: 0 0 20px rgba(0,0,0,0.3); /* UPDATED */
+  color: #fff; /* UPDATED */
+  transition: transform 0.3s, box-shadow 0.3s; /* UPDATED */
 }
 
-/* user-profile settings-section */
-.app-profile-content .profile-settings {
-  /* background-color: lightseagreen; */
-  margin: 0px 15px 15px;
+.app-profile-content .profile-analytics-container .profile-analytic-cards .analytics-card:hover {
+  transform: scale(1.05); /* UPDATED */
+  box-shadow: 0 0 25px rgba(41, 253, 83, 0.3); /* UPDATED: green glow */
 }
 
-.app-profile-content h1 {
-  font-size: 40px;
-}
-
+/* Profile privileges (buttons) */
 .app-profile-content .profile-privilleges {
   display: flex;
-  flex-direction: column;
-  row-gap: 15px;
+  flex-direction: row; /* UPDATED: horizontal list instead of column */
+  gap: 20px; /* UPDATED */
+  flex-wrap: wrap; /* UPDATED for responsiveness */
 }
 
 .app-profile-content .profile-privilleges .profile-privillges-button {
-    text-decoration: none;
-    text-align: center;
-    color: var(--light-primary-text-fore-color);
-    width: 20%;
-    padding: 5px 0;
-    border-radius: 5px;
-    border: 1px solid var(--light-primary-text-fore-color);
-    font-size: 16px;
-    cursor: grab;
-    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
-    transition: box shadow 0.15s;
+  text-decoration: none;
+  text-align: center;
+  color: #000; /* UPDATED: black text on green button */
+  background-color: #29fd53; /* UPDATED: green accent */
+  padding: 10px 20px; /* UPDATED */
+  border-radius: 30px; /* UPDATED */
+  border: none; /* UPDATED */
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.5); /* UPDATED */
+  transition: all 0.2s ease; /* UPDATED */
+}
+
+.app-profile-content .profile-privilleges .profile-privillges-button:hover {
+  background-color: #1ad53f; /* UPDATED */
+  transform: scale(1.05); /* UPDATED */
 }
 
 .app-profile-content .profile-privilleges .logout {
-  background-color: rgb(255, 230, 230);
+  background-color: #f67271; /* UPDATED: red logout button */
+  color: #fff; /* UPDATED */
 }
 
 .app-profile-content .profile-privilleges .profile-privillges-button:active {
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 rgba(0,0,0,0.5);
 }
 
-
-/* Update Profile Sub Section (Model) < Profile Component */
 /* ======================
-   Profile Update Modal
+   PROFILE UPDATE MODAL
    ====================== */
-
-/* Overlay background (blur + darken) */
 .profile-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(6px);
+  background: rgba(55,55,55,0.6); /* UPDATED */
+  backdrop-filter: blur(8px); /* UPDATED */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -566,16 +651,18 @@
 
 /* Modal box */
 .profile-modal {
-  background: #fff;
+  background: rgba(55,55,55,0.9); /* UPDATED: dark glass */
   padding: 30px 25px;
   border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5); /* UPDATED */
   width: 100%;
   max-width: 450px;
   animation: fadeInScale 0.3s ease;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  border: 2px solid rgba(255,255,255,0.2); /* UPDATED */
+  color: #fff; /* UPDATED */
 }
 
 /* Modal heading */
@@ -583,6 +670,7 @@
   margin-bottom: 10px;
   font-size: 22px;
   text-align: center;
+  color: #29fd53; /* UPDATED */
 }
 
 /* Inputs */
@@ -591,15 +679,18 @@
   width: 100%;
   padding: 12px;
   font-size: 16px;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(255,255,255,0.2); /* UPDATED */
   border-radius: 8px;
   outline: none;
-  transition: border-color 0.2s;
+  background: rgba(255,255,255,0.1); /* UPDATED */
+  color: #fff; /* UPDATED */
+  transition: border-color 0.2s, background 0.2s;
 }
 
 .profile-modal input:focus,
 .profile-modal select:focus {
-  border-color: var(--light-primary-back-color);
+  border-color: #29fd53; /* UPDATED */
+  background: rgba(255,255,255,0.15); /* UPDATED */
 }
 
 /* Action buttons */
@@ -613,28 +704,33 @@
 .profile-modal button {
   flex: 1;
   padding: 10px 15px;
-  border-radius: 8px;
+  border-radius: 30px; /* UPDATED */
   font-size: 16px;
-  cursor: grab;
-  transition: background 0.2s;
+  cursor: pointer;
+  transition: all 0.2s ease; /* UPDATED */
+  border: none; /* UPDATED */
 }
 
 .profile-modal .save-btn {
-  background: var(--light-primary-back-color);
-  color: var(--light-primary-text-fore-color);
-  border: none;
+  background: #29fd53; /* UPDATED */
+  color: #000; /* UPDATED */
+}
+
+.profile-modal .save-btn:hover {
+  background: #1ad53f; /* UPDATED */
+  transform: scale(1.05); /* UPDATED */
 }
 
 .profile-modal .cancel-btn {
-  background: #f5f5f5;
-  border: 1px solid #ddd;
+  background: rgba(255,255,255,0.1); /* UPDATED */
+  color: #fff; /* UPDATED */
 }
 
 .profile-modal .cancel-btn:hover {
-  background: #eee;
+  background: rgba(255,255,255,0.2); /* UPDATED */
 }
 
-/* Animation */
+/* Animation remains the same */
 @keyframes fadeInScale {
   from {
     opacity: 0;
@@ -648,142 +744,218 @@
 
 
 
-
-/*************************** 
-  Polls Component/ Section 
-****************************/
-.app-content  .polls-page {
-  display: block;           /* remove flexbox here */
-  padding: 40px 20px;
-}
-
-/* Poll grid */
-.polls-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  width: 100%;
-  max-width: 1100px;
+/* Polls page container */
+.app-content.polls-page {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
-/* Poll card */
-.polls-card {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+/* Remove grid entirely */
+.polls-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.polls-card a {
-  text-decoration: none;
-  color: var(--light-primary-text-fore-color);
+/* Poll card: horizontal list look */
+.polls-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #36373b;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
 .polls-card:hover {
-  transform: translateY(-5px);
+  border: 1px solid #29fd53;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
-.polls-card h2 {
-  font-size: 20px;
-  margin-bottom: 8px;
-  color: var(--light-primary-text-fore-color);
-}
-
-.polls-card .desc {
-  font-size: 14px;
-  margin-bottom: 12px;
-  color: #555;
-}
-
-/* Meta info */
-.polls-card .meta {
+/* Left content wrapper */
+.polls-card-content {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+}
+
+/* Optional icon style */
+.polls-card-content .icon {
+  font-size: 2rem;
+  background: rgba(216, 205, 226);
+  color: rgb(82, 22, 138);
+  padding: 10px;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+/* Text section */
+.polls-card-content .text h2 {
+  font-size: 18px;
+}
+
+.polls-card-content .text h2 a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.polls-card-content .text .desc {
+  font-size: 14px;
+  color: #aaa;
+  margin: 4px 0;
+}
+
+.polls-card-content .text .meta {
   font-size: 13px;
-  margin-bottom: 10px;
   color: #777;
 }
 
-/* Tags */
-.polls-card .tags {
+/* Right-side buttons or expiry info */
+.polls-card-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-end;
   gap: 6px;
-  margin-bottom: 10px;
 }
 
-.polls-card .tag {
-  background: var(--light-primary-back-color);
-  color: var(--light-primary-text-fore-color);
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-}
-
-/* Expiration */
 .polls-card .expires {
   font-size: 12px;
   color: crimson;
   font-weight: 500;
 }
 
-/* Single-Poll Component Section */
-.poll-page {
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
+.polls-card-actions .result {
+  font-size: 22px;
+  cursor: grab;
 }
 
-.poll-card {
-  background: #fff;
-  padding: 25px 20px;
-  border-radius: 15px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+/* Poll-Results Page */
+.app-poll-result-content {
+  min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  animation: fadeIn 0.4s ease-in-out;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 16px;
+  margin-top: 60px;
+  color: var(--primary-text-color);
 }
 
-/* Title & Description */
-.poll-card h2 {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: var(--light-primary-text-fore-color);
+/* container box */
+.poll-container {
+  margin-top: 40px;
+  position: relative;
+  min-height: 300px;
+  min-width: 60%;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+  padding: 40px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
-.poll-card .desc {
+.poll-container h2 {
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.progress-container {
+  margin-bottom: 25px;
+}
+
+.progress-container h4 {
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.progress-bar {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  border-radius: 11px;
+  background-color: #fff;
+  box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+/* bars */
+.bar-one,
+.bar-two,
+.bar-three {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  color: #000;
+  font-weight: 800;
   font-size: 16px;
-  color: #555;
-  margin-bottom: 10px;
+  line-height: 1.9;
+  text-align: center;
+  border-radius: 11px;
+  white-space: nowrap;
 }
 
-/* Meta info (author & category) */
-.poll-card .meta {
+.bar-one {
+  background: rgba(50, 222, 132, 1);
+}
+
+.bar-two {
+  background: #ffc422;
+}
+
+.bar-three {
+  background: #fe7563;
+}
+
+/* total votes text */
+.total {
+  text-align: left;
+  margin-top: 10px;
+}
+
+/* back button */
+.btn-align {
   display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  color: #777;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 8px;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+.btn-align a {
+  text-decoration: none;
 }
 
-/* Tags */
-.poll-card .tags {
+.btn-align button {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-radius: 11px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: var(--primary-fore-color);
+  color: var(--primary-back-color);
+  border: none;
+  transition: all 0.2s;
 }
 
-.poll-card .tag {
-  background: var(--light-primary-back-color);
-  color: var(--light-primary-text-fore-color);
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 13px;
+.btn-align button:hover {
+  background-color: #5889f0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .polls-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .polls-card-actions {
+    align-items: flex-start;
+  }
 }
 
 /* =========================
@@ -800,15 +972,12 @@
   flex-direction: column;  /* stack input + media */
   gap: 8px;
   padding: 12px 15px;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
   border-radius: 12px;
   transition: all 0.2s ease;
 }
 
-.poll-option-wrap:hover {
-  border-color: var(--light-primary-back-color);
-  background: #fafafa;
-}
+
 
 .poll-option-wrap input[type="radio"],
 .poll-option-wrap input[type="checkbox"] {
@@ -867,8 +1036,169 @@
 }
 
 
+
+/* Single Poll Section */
+.poll-page .poll-card {
+  background: #2a2b2e;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 700px;
+  margin: 20px auto;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+/* Poll title/description */
+.poll-page .poll-card h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.poll-page .poll-card .desc {
+  font-size: 15px;
+  color: #bbb;
+  margin-bottom: 12px;
+}
+
+.poll-page .poll-card .meta {
+  font-size: 13px;
+  color: #888;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* Tags */
+.poll-page .poll-card .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.poll-page .poll-card .tag {
+  background: #444;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* === OPTIONS === */
+.poll-page .radio-item {
+  position: relative;
+}
+
+.poll-page .radio-item input[type="radio"],
+.poll-page .radio-item input[type="checkbox"] {
+  display: none;
+}
+
+.poll-page .radio-item + .radio-item {
+  margin-top: 15px;
+}
+
+.poll-page .radio-item label {
+  display: block;
+  padding: 14px 60px;
+  background: #36373b;
+  border: 2px solid #3f484f;
+  border-radius: 11px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  position: relative;
+  transition: 0.4s ease-in-out;
+}
+
+/* Custom radio/checkbox indicators */
+.poll-page .radio-item label:after,
+.poll-page .radio-item label:before {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.poll-page .radio-item label:after {
+  height: 19px;
+  width: 19px;
+  border: 2px solid #fff;
+  left: 20px;
+  top: calc(50% - 12px);
+}
+
+.poll-page .radio-item label:before {
+  background: #29fd53;
+  height: 11px;
+  width: 11px;
+  left: 25.5px;
+  top: calc(50% - 6px);
+  transform: scale(5);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s ease-in-out;
+}
+
+.poll-page .radio-item input:checked ~ label {
+  border-color: #29fd53;
+}
+
+.poll-page .radio-item input:checked ~ label:before {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+/* Media (image/video) inside options */
+.poll-page .poll-option-media {
+  display: block;
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+
+/* === BUTTON === */
+.poll-page .create-btn {
+  margin-top: 20px;
+  width: 160px;
+  height: 40px;
+  background: #29fd53;
+  border: none;
+  border-radius: 11px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #000;
+  transition: background-color 0.2s;
+}
+
+.poll-page .create-btn:hover:not(:disabled) {
+  background-color: #06c156;
+}
+
+.poll-page .create-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.poll-page .expires {
+  font-size: 13px;
+  color: crimson;
+  text-align: right;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 630px) {
+  .poll-page .create-btn {
+    width: 100%;
+  }
+}
+
+
+
 /* responsive-design */
-/* screen: 1200px (tablets) */
 @media only screen and (max-width: 1200px) {
   /* body {
       background-color: #000;
@@ -881,11 +1211,12 @@
   
   /* container's header-section */
   .container .app-header {
-    background-color: var(--light-primary-back-color);
-    width: 100%;
-    border-radius: 50px 50px 0 0;
-    flex-direction: row;
-    justify-content: space-evenly;
+     width: 100%;
+     height: 100px;
+     flex-direction: row;
+     justify-content: space-between;
+     padding: 10px 20px;
+     border-radius: 0 0 20px 20px;
   }
 
   /* navigation-menu and login-button */
@@ -899,6 +1230,7 @@
   /* open-menu-button */
   .container .app-header .open-menu-btn {
     visibility: visible;
+    display: block;
     font-size: 34px;
     border: none;
     cursor: pointer;
@@ -909,7 +1241,7 @@
     visibility: visible;
   }
   .container .responsive-content-menu .menu-nav a { 
-    font-size: 30px;
+    font-size: 20px;
   }
   
   /* authentication-module */
@@ -930,6 +1262,8 @@
   .app-content .create-poll-form {
     width: 100%;
   }
+
+  
 }
 
 /* screen: 600px (mobile-phones) */
@@ -950,14 +1284,18 @@
     font-size: 30px;
   }
 
-  /* app-content section from create-poll-module */
-  .app-content .create-poll-form .new-poll-option .new-poll-option-button {
-    display: none;
+  /* app-auth-content */
+  .app-auth-content {
+    width: 100%;
+    border-radius: 0;
+    height: 100vh;
   }
-  
-  .app-content .create-poll-form .responsive .responsive-btn {
-    display: block;
+
+  .app-auth-content .auth-form {
+    max-width: 100%;
+    padding: 20px;
   }
+
 
   /* Single-Poll Module */
   .poll-card {
@@ -973,7 +1311,22 @@
 }
 
 /* screen: 600px (ultra-low-screen mobile-phones) */
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 450px) {
+
+  /* app-auth-content */
+  .app-auth-content {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        margin: 0;
+    }
+
+    .app-auth-content .auth-form {
+        max-width: 100%;
+        padding: 30px 20px;
+    }
 
   /* app-content from Create-Poll-Module */
   .container .app-content {
