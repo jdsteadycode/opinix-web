@@ -10,6 +10,7 @@ import { CreatePoll } from "./pages/CreatePoll.jsx";
 import { Profile } from "./pages/Profile.jsx";
 import { Polls } from "./pages/Polls.jsx";
 import { Poll } from "./pages/Poll.jsx";
+import { PollResult } from "./pages/PollResult.jsx";
 import './App.css';
 
 // () -> App Component
@@ -46,6 +47,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Polls />} />
             <Route path="/poll/:id" element={<Poll user_id={id} />}
+            />
+            <Route path="/poll-result/:id" element={<PollResult />}
             />
             <Route path="/login" element={<Login handleAuth={handleAuth} handleId={handleId} />} />
             <Route path="/register" element={<Register />} />
