@@ -8,6 +8,7 @@ const upload = require("../middleware/upload.js");
 router.post('/create',upload.any() , pollController.createPoll);
 router.get('/all', pollController.allPolls);
 router.get("/:id", pollController.singlePoll);
+router.post("/stats", pollController.fetchPollStats);
 
 // export the router
 module.exports = router;
