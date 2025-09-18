@@ -1,19 +1,23 @@
-/* custom font - nunito */
+/* custom font - nunito + Rajdhani */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
-/* custom variables to contribute to theme/ elements */
-:root{
+/* Theme variables */
+:root {
     --default-font: "Nunito", system-ui, Avenir, Helvetica, Arial, sans-serif;
-    --light-primary-fore-color: teal;
-    --light-primary-text-fore-color: #000;
-    --light-primary-back-color: #ededed;
-    --light-secondary-back-color: #f6f6f6;
-    --light-secondary-fore-color: rgb(131, 8, 219);
+    
+    /* Dark Theme Colors inspired from Django project */
+    --primary-back-color: #1f1f1f;      /* main background */
+    --secondary-back-color: #2a2a2a;    /* cards, panels */
+    --primary-fore-color: #29fd53;      /* bright accent */
+    --primary-text-color: #c0ced8;      /* light text on dark bg */
+    --secondary-text-color: #ffffffcc;  /* secondary text */
+    --error-color: crimson;
 }
 
 /* all elements */
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     font-family: var(--default-font);
 }
