@@ -1,5 +1,6 @@
 // grab module(s)
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // () -> CreatePoll component
 function CreatePoll() {
@@ -115,6 +116,14 @@ function CreatePoll() {
         }
     }
 
+    // handle file + preview
+    function handleFileOptionChange(file, id) {
+        const preview = file ? URL.createObjectURL(file) : null;
+        setPollOptions((prev) =>
+        prev.map((opt) => (opt.id === id ? { ...opt, file, preview } : opt))
+        );
+    }
+
     // () -> handle form submission
     async function handlePollCreation(event) {
         // restrict default behavior*
@@ -207,6 +216,9 @@ function CreatePoll() {
             const data = await res.json();
             console.log("✅ Poll created:", data);
 
+            // navigate to main-home page...
+            navigate("/");
+
             // reset the form*
             formData = new FormData();
 
@@ -226,127 +238,120 @@ function CreatePoll() {
     // return jsx!
     return(
         <main className="app-content">
-
-            <form 
-                className="create-poll-form" 
-                onSubmit={handlePollCreation}
-            >
+            <form className="create-poll-form" onSubmit={handlePollCreation}>
                 <h1>Get started</h1>
 
-                <input name="title" type="text" placeholder="What's title ?" />
-                {errors.title && <span className="error">{errors.title}</span>}
+                <div className="input-box">
+                    <input name="title" type="text" required />
+                    <label>Title</label>
+                    {errors.title && <span className="error">{errors.title}</span>}
+                </div>
 
-
-                <div className="poll-description">
-                    <label htmlFor="poll-description-text-area">Description</label>
-                    <textarea 
-                        name="description"
-                        className="poll-description-text-area">
-                    </textarea>
+                <div className="input-box">
+                    <textarea name="description" className="poll-description-text-area" required />
+                    <label>Description</label>
                     {errors.description && <span className="error">{errors.description}</span>}
                 </div>
 
                 <div className="poll-option-box">
-                    {/* intially render 2 options minimum */}
-                    {pollOptions.map(function(option, index, pollOptions) {
-                        return (
-                            <div
-                                className="poll-option-wrap"
-                                key={option.id}
-                                onMouseEnter={(event) => setHoveredOptionIndex(option.id)}
-                                onMouseLeave={(event) => setHoveredOptionIndex(null)}
-                            >
-                                <input 
+                    {pollOptions.map((option, index) => (
+                        <div
+                            className="poll-option-wrap"
+                            key={option.id}
+                            onMouseEnter={() => setHoveredOptionIndex(option.id)}
+                            onMouseLeave={() => setHoveredOptionIndex(null)}
+                        >
+                            <div className="input-box">
+                                <input
                                     className="option"
                                     type="text"
-                                    placeholder={"Option " + (index + 1)}
-                                    onChange={(event) => handleOptionChange(event.target.value, option.id)}
+                                    placeholder={`Option ${index + 1}`}
+                                    onChange={(e) => handleOptionChange(e.target.value, option.id)}
                                 />
                                 {errors[`option${index}`] && <span className="error">{errors[`option${index}`]}</span>}
-
-                                <input 
-                                    id={`file-${option.id}`}
-                                    className="option"
-                                    type="file"
-                                    style={{display: "none"}}
-                                    accept="image/*, video/*"
-                                    onChange={(event) => handleFileOptionChange(event.target.files[0], option.id)}
-                                />
-                                {/* custom-file-upload button */}
-                                <label htmlFor={`file-${option.id}`} className="file-upload-icon">
-                                    <i className="ri-upload-cloud-line"></i>
-                                </label>
-                                {/* only show remove poll button when there are atleast 2 options! */}
-                                {pollOptions.length > 2 && hoveredOptionIndex === option.id && (
-                                    <span
-                                        onClick={() => handleRemoveOption(option.id)}
-                                    >
-                                        <i className="ri-close-circle-line"></i>
-                                    </span>
-                                )}
                             </div>
-                        )
-                    })}
+
+                            <input
+                                id={`file-${option.id}`}
+                                className="option"
+                                type="file"
+                                style={{ display: "none" }}
+                                accept="image/*, video/*"
+                                onChange={(e) => handleFileOptionChange(e.target.files[0], option.id)}
+                            />
+                            <label htmlFor={`file-${option.id}`} className="file-upload-icon">
+                                <i className="ri-upload-cloud-line"></i>
+                            </label>
+
+                            {option.preview && (
+                                <img
+                                src={option.preview}
+                                alt="preview"
+                                style={{ width: "50px", height: "50px", borderRadius: "8px", objectFit: "cover" }}
+                                />
+                            )}
+
+                            {pollOptions.length > 2 && hoveredOptionIndex === option.id && (
+                                <span onClick={() => handleRemoveOption(option.id)}>
+                                    <i className="ri-close-circle-line"></i>
+                                </span>
+                            )}
+                        </div>
+                    ))}
                 </div>
-           
-                <div className="new-poll-option">   
-                    {/* remove `add-option-button` when maximum limit reached! */}
+
+                <div className="new-poll-option">
                     {pollOptions.length !== 5 && (
-                        <button 
-                            className="new-poll-option-button"
-                            onClick={handleAddOption}
-                        >
-                            <i className="ri-add-circle-line"></i>
-                            Add option
+                        <button className="new-poll-option-button" onClick={handleAddOption}>
+                            <i className="ri-add-circle-line"></i> Add option
                         </button>
                     )}
                 </div>
-                <div className="new-poll-option responsive">
-                    <button className="responsive-btn"
-                        onClick={handleAddOption}
-                    >
-                        <i className="ri-add-circle-line"></i>
-                    </button>
+                <div className="input-box">
+                    <select name="category" required>
+                        <option value="" hidden>Select Category?</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="General Knowledge">General Knowledge</option>
+                    </select>
+                    {errors.category && <span className="error">{errors.category}</span>}
                 </div>
-  
-                <select name="category" className="poll-category">
-                    <option value="Select Type?" hidden>Select Category?</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Sports">Sports</option>
-                    <option value="Entertainment">Entertainment</option>
-                    <option value="General Knowledge">General Knowldege</option>
-                </select>
-                {errors.category && <span className="error">{errors.category}</span>}
-        
-                <select name="type" className="poll-type">
-                    <option value="Select Type?" hidden>Select Type?</option>
-                    <option value="Single Choice">Single Choice</option>
-                    <option value="Multi Choice">Multi Choice</option>
-                </select>
-                {errors.type && <span className="error">{errors.type}</span>}
 
-                <input 
-                    name="expiryDate"
-                    type={inputType} placeholder="Expiry Date ? "
-                    onFocus={handleInputFocusTextChange}
-                />
-                {errors.expiry && <span className="error">{errors.expiry}</span>}
+                <div className="input-box">
+                    <select name="type" required>
+                        <option value="" hidden>Select Type?</option>
+                        <option value="Single Choice">Single Choice</option>
+                        <option value="Multi Choice">Multi Choice</option>
+                    </select>
+                    {errors.type && <span className="error">{errors.type}</span>}
+                </div>
 
-                <input 
-                    name="tags"
-                    type="text"
-                    placeholder="Some tags (ex: tech, technology etc...)"
-                />
+                <div className="input-box">
+                    <input
+                        name="expiryDate"
+                        type={inputType}
+                        placeholder="Expiry Date ? "
+                        onFocus={handleInputFocusTextChange}
+                        required
+                    />
+                    {errors.expiry && <span className="error">{errors.expiry}</span>}
+                </div>
+
+                <div className="input-box">
+                    <input name="tags" type="text" placeholder="Tags (tech, fun, etc…)" />
+                </div>
 
                 <div className="poll-comments">
-                    <label htmlFor="allow-comment">Allow comments</label>
+                    <label>Allow comments</label>
                     <input type="radio" name="allow-comments" value={1} /> Yes
-                    <input type="radio" name="allow-comments" value={0} /> 
-                    No
+                    <input type="radio" name="allow-comments" value={0} /> No
                 </div>
+
                 <button className="create-btn" type="submit">Create!</button>
             </form>
         </main>
+
     );
 }
 
