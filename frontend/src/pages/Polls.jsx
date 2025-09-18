@@ -78,35 +78,30 @@ function Polls() {
         {/* Each Poll Card */}
         {polls.map((poll) => (
           <section key={poll.id} className="polls-card">
-
-            {/* when poll-title is clicked shift the client to `Poll` Page */}
-              <Link to={`/poll/${poll.id}`}>
+            <div className="polls-card-content">
+              <div className="icon">
+                📊
+              </div>
+              <div className="text">
                 <h2>
-                  {poll.title}
+                  <Link to={`/poll/${poll.id}`}>{poll.title.length > 50 ? poll.title.slice(0, 45) + "..." : poll.title}</Link>
                 </h2>
-              </Link>
-
-            {/* poll-description */}
-            <p className="desc">{poll.description}</p>
-
-            {/* poll-category */}
-            <div className="meta">
-              <span className="category">#{poll.category}</span>
-              <span className="author">by {poll.username}</span>
+                <p className="desc">{poll.description}</p>
+                <div className="meta">
+                  <span>#{poll.category}</span> · <span>by {poll.username}</span>
+                </div>
+              </div>
             </div>
 
-            {/* poll-tags */}
-            <div className="tags">
-              {poll.tags?.map((tag, idx) => (
-                <span key={idx} className="tag">
-                  {tag}
-                </span>
-              ))} 
-            </div>
-
-            {/* poll's expiry date */}
-            <div className="expires">
-              Expires: {new Date(poll.expires_at).toLocaleDateString()}
+            <div className="polls-card-actions">
+              <div className="expires">
+                Expires: {new Date(poll.expires_at).toLocaleDateString()}
+              </div>
+              <div className="result">
+                <Link to={`/poll-result/${poll.id}`}>
+                  📋
+                </Link>
+              </div>
             </div>
           </section>
         ))}
