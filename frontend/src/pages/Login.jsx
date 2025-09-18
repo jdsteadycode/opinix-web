@@ -109,29 +109,42 @@ function Login({ handleAuth, handleId }) {
         <main className="app-auth-content">
             <form className="auth-form" onSubmit={handleLogin}>
                 <h1>Hi there</h1>
-                <input 
-                    name="email"
-                    type="text" 
-                    placeholder="Enter Email?" 
-                    onChange={fillUserData}
-                />
-                <input 
-                    name="password"
-                    type="password"
-                    placeholder="Enter password?    " 
-                    onChange={fillUserData}
-                />
+
+                {/* Email input */}
+                <div className="input-box">
+                    <input
+                        name="email"
+                        type="text"
+                        required
+                        onChange={fillUserData}
+                    />
+                    <label>Email</label>
+                </div>
+
+                {/* Password input */}
+                <div className="input-box">
+                    <input
+                        name="password"
+                        type="password"
+                        required
+                        onChange={fillUserData}
+                    />
+                    <label>Password</label>
+                </div>
+
+                {/* Error message */}
+                {error && <p className="message">{error}</p>}
+
+                {/* Register link */}
                 <p className="auth-register">
-                    Are you new?
+                    Are you new?{" "}
                     <Link to="/register">
-                        <span> register here</span>
+                        <span>register here</span>
                     </Link>
                 </p>
-                <button type="submit">login</button>
-            </form>
 
-            {/* when error */}
-            {error && <p style={{"color": "crimson"}}>{error}</p>}
+                <button type="submit">Login</button>
+            </form>
         </main>
     );
 }
