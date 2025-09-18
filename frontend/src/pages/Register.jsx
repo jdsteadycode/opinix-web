@@ -138,38 +138,83 @@ function Register() {
     // return jsx!
     return(
          <main className="app-auth-content">
-            <form className="auth-form" encType="multipart/form-data" onSubmit={handleRegistration}>
+            <form
+                className="auth-form"
+                encType="multipart/form-data"
+                onSubmit={handleRegistration}
+            >
                 <h1>Welcome folk!</h1>
-                <input type="text" name="email" placeholder="Your Email?" onChange={handleFormData} />
-                <input type="text" name="username" placeholder="Your username?" onChange={handleFormData} />
-                <input type="text" name="phone" placeholder="Your phone-number?" onChange={handleFormData} />
-                <input type="password" name="password" placeholder="Your password?" onChange={handleFormData} />
-                <input type="password" name="confirmPassword" placeholder="Confrim password?" onChange={handleFormData} /> 
-                {/* <input 
-                    type={inputType}
-                    name="birthdate"
-                    placeholder="Your DOB?" 
+
+                <div className="input-box">
+                <input
+                    type="text"
+                    name="email"
+                    required
                     onChange={handleFormData}
-                    onFocus={handleInputFocusTextChange} /> */}
-                <input 
-                    type="file" 
-                    name="profileImage" 
-                    accept="image/*"
-                    onChange={handleFormData} 
+                />
+                <label>Email</label>
+                </div>
+
+                <div className="input-box">
+                <input
+                    type="text"
+                    name="username"
+                    required
+                    onChange={handleFormData}
+                />
+                <label>Username</label>
+                </div>
+
+                <div className="input-box">
+                <input
+                    type="text"
+                    name="phone"
+                    required
+                    onChange={handleFormData}
+                />
+                <label>Phone Number</label>
+                </div>
+
+                <div className="input-box">
+                <input
+                    type="password"
+                    name="password"
+                    required
+                    onChange={handleFormData}
+                />
+                <label>Password</label>
+                </div>
+
+                <div className="input-box">
+                <input
+                    type="password"
+                    name="confirmPassword"
+                    required
+                    onChange={handleFormData}
+                />
+                <label>Confirm Password</label>
+                </div>
+
+                <input
+                type="file"
+                name="profileImage"
+                accept="image/*"
+                onChange={handleFormData}
                 />
 
                 <p className="auth-register">
-                    I have one!
-                    <Link to="/login">
-                        <span> login here</span>
-                    </Link>
+                I have one!
+                <Link to="/login">
+                    <span> login here</span>
+                </Link>
                 </p>
+
                 <button type="submit">register</button>
             </form>
 
-            {/* when error */}
-            {error && <p style={{"color": "crimson"}}>{error}</p>}
-        </main>
+            {/* Error */}
+            {error && <p style={{ color: "crimson" }}>{error}</p>}
+            </main>
     );
 }
 
