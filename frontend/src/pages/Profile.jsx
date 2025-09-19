@@ -110,37 +110,26 @@ function Profile() {
 
     // return jsx
     return(
-            <main className="app-content app-profile-content">
+            <main className="about-container">
 
                 {/* Profile Heading */}
-                <section className="profile-heading">
-                    <h1>🧑‍💻 {user?.nickname ?? "N/A"}</h1>
-                    <div className="profile-details">
-                        <p>Email: {user?.email ?? "N/A"}</p>
-                        <p>Phone: {user?.phone ?? "N/A"}</p>
-                        <p>DOB: {user?.birthdate ? new Date(user.birthdate).toISOString().split("T")[0] : "N/A"}</p>
-                    </div>
-                </section>
-
-                {/* Profile container */}
-                <section className="profile-analytics-container">
-                    <h1>📊 Stats</h1>
+                <div className="text-container">
+                    <h1>About</h1>
+                    <p>{user?.bio}</p>
+                    <h1>Stats</h1>
                     <div className="profile-analytic-cards">
                         <div className="analytics-card">
-                            <h2>Created polls: {user?.stats?.createdPolls}</h2>
+                            <b>Created polls: {user?.stats?.createdPolls}</b>
                         </div>
                         <div className="analytics-card">
-                            <h2>Voted polls: {user?.stats?.votedPolls}</h2>
+                            <b>Voted polls: {user?.stats?.votedPolls}</b>
                         </div>
                         <div className="analytics-card">
-                            <h2>Total votes: {user?.stats?.totalVotes}</h2>
+                            <b>Total votes: {user?.stats?.totalVotes}</b>
                         </div>
                     </div>
-                </section>
 
-                {/* Profile settings */}
-                <section className="profile-settings">
-                    <h1>⚙️ Settings</h1>
+                    <h1>Settings</h1>
                     <div className="profile-privilleges">
                         <button 
                             onClick={() => setShowViewModal(true)}
@@ -154,8 +143,25 @@ function Profile() {
                             Update Profile
                         </button>
                     </div>
-                </section>
+                </div>
 
+                <div className="card-container">
+                    <div className="card">
+                        <div className="content">
+                            <div className="img">
+                                <img 
+                                    src={
+                                        formData.profileImage instanceof File
+                                        ? URL.createObjectURL(formData.profileImage) // preview new file
+                                        : `http://localhost:5000/uploads/${formData.profileImage}` // old file from server
+                                    }
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    
                 {/* View profile section */}
                 {showViewModal && (
                     <div className="profile-overlay">
