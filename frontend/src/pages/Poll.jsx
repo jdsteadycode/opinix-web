@@ -1,6 +1,6 @@
 // grab module(s)
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 // () -> Poll Component (single poll)
 function Poll({ user_id }) {
@@ -10,7 +10,7 @@ function Poll({ user_id }) {
 
     // grab the id?
     const { id } = useParams();
-
+    
     // initial state array for loading-state*
     const [isLoading, setIsLoading] = useState(true);
 
@@ -28,6 +28,9 @@ function Poll({ user_id }) {
 
     // initial state array for voting.
     const [isVoting, setIsVoting] = useState(false);
+
+    // initial state array for toast box style...
+    const [toastStyle, setToastStyle] = useState("block");
 
     // handle the API-call
     useEffect(function() {
@@ -105,6 +108,11 @@ function Poll({ user_id }) {
 
                 // get the data
                 const data = await pastResponse.json();
+
+                console.log("Hello from can or not vote?", data);
+
+                // update the state**
+                setCanVote(data?.status);
 
                 // return the status
                 return data;
@@ -217,6 +225,33 @@ function Poll({ user_id }) {
             {/* Poll Card */}
             <div className="poll-card">
                 
+                {/* toast */}
+                {user_id == null && <section className="cannot-vote" style={{display: toastStyle}}>
+                    <i className="ri-close-line"
+                        onClick={(e => setToastStyle("none"))}
+                    >
+                    </i>
+                    <h2>Please Login before, Voting!</h2>   
+                    <p>It seems like you aren't authenticated yet... 
+                            <Link to={`/login`}>
+                               <span style={{"textDecoration": "none"}}> here</span> 
+                            </Link>    
+                    </p> 
+                </section>}
+                {canVote === false && 
+                <section className="cannot-vote" style={{display: toastStyle}}>
+                    <i className="ri-close-line"
+                        onClick={(e => setToastStyle("none"))}
+                    >
+                    </i>
+                    <h2>You've already voted</h2>   
+                    <p>So, please check the results of your vote   
+                            <Link to={`/poll-result/${pollDetails.id}`}>
+                               <span style={{"textDecoration": "none"}}> here</span> 
+                            </Link>    
+                    </p> 
+                </section>}
+                
                 {/* Poll's Title */}
                 <h2>{pollDetails.title}</h2>
 
@@ -267,7 +302,7 @@ function Poll({ user_id }) {
                         className="create-btn"
                         type="button"
                         onClick={handleVote}
-                        disabled={canVote === false || selectedOptions.length == 0 || isVoting}
+                        disabled={user_id == null || canVote === false || selectedOptions.length == 0 || isVoting}
                     >
                     {isVoting ? "Submitting..." : "Submit"}
                     </button>
