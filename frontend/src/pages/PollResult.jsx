@@ -39,11 +39,10 @@ function PollResult() {
      <main className="app-poll-result-content">
       <h1>Experience Live Poll</h1>
       <section className="poll-container">
-        {/* <h2>{poll.ques}</h2> */}
 
         {pollResult["voteSummary"].map(function(poll, index, pollResult) {
           return(
-            <div className="progress-container">
+            <div className="progress-container" key={index}>
               <h4>{poll.option_text}</h4>
               <div className="progress-bar">
                 <span className="bar-one" style={{ width: `${(poll.votes_count / poll.total) * 100}` }}>
@@ -61,7 +60,7 @@ function PollResult() {
         <div className="btn-align">
           <Link to="/">
             <button>
-              <i className="fa-solid fa-arrow-left"></i>Back to poll
+              <i className="fa-solid fa-arrow-left"></i>Back
             </button>
           </Link>
         </div>
