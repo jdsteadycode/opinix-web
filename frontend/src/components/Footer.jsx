@@ -7,7 +7,7 @@ function Footer() {
     // retun footer's jsx
     return(
         <footer className="app-footer">
-            @ULJ designs.ltd
+			<p>&#169; 2025 Opinix.  All Rights Reserved.</p>
         </footer>
     );
 }
