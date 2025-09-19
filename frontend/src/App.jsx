@@ -5,6 +5,7 @@ import { SecuredRoute } from "./components/SecuredRoute.jsx";
 import { Header } from "./components/Header.jsx";
 import { Footer } from "./components/Footer.jsx";
 import { Login } from "./pages/Login.jsx";
+import { Home } from "./pages/Home.jsx";
 import { Register } from "./pages/Register.jsx";
 import { CreatePoll } from "./pages/CreatePoll.jsx";
 import { Profile } from "./pages/Profile.jsx";
@@ -32,11 +33,11 @@ function App() {
     setId(incomingId);
 
     // check log**
-    console.log(id);
+    // console.log(id);
   }
 
   // check log**
-  console.log(id);
+  console.log("u id", id);
 
   // return App's HTML
   return (
@@ -45,7 +46,8 @@ function App() {
         <section className="container">
           <Header isUser={isUser} handleAuth={handleAuth} handleId={handleId} />
           <Routes>
-            <Route path="/" element={<Polls />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/polls" element={<Polls />} />
             <Route path="/poll/:id" element={<Poll user_id={id} />}
             />
             <Route path="/poll-result/:id" element={<PollResult />}
