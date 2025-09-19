@@ -35,14 +35,14 @@ function Header({ isUser, handleAuth, handleId }) {
         <header className="app-header">
             
             {/* <!-- logo-icon --> */}
-            <img src="/opinix-high-resolution-logo-transparent.png" alt="opinix.png" />
+            <img src="/opinix-logo-white-text.png" alt="opinix.png" />
 
             {/* <!-- navigation section --> */}
             <nav>
                 <ul>
                     <li>
                         <i className="ri-chat-poll-line"></i>
-                        <Link to="/">
+                        <Link to="/polls">
                             polls
                         </Link>
                     </li>
@@ -63,7 +63,7 @@ function Header({ isUser, handleAuth, handleId }) {
             </nav>
 
             {/* <!-- authentication-section --> */}
-            <div className="auth-btn" href="#">
+            <div className="auth-btn">
                 {isUser
                     ?
                     <button onClick={handleLogout}>logout</button>
@@ -95,7 +95,7 @@ function Header({ isUser, handleAuth, handleId }) {
                 <nav className="menu-nav">
                     <ul>
                         <li>
-                            <Link to="/">
+                            <Link to="/polls">
                                 <i className="ri-chat-poll-line"></i>
                                 polls
                             </Link>
