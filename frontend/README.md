@@ -12,7 +12,7 @@ Its based on the following modern technologies i.e.,
 
 - Secure Authentication (initially done)
 - Poll Creation (done)
-- One-time Poll Vote! (in-progress)
+- One-time Poll Vote! (done)
 - Trending Polls (in-progress)
 
 ## _🪜 WALKTRHOUGH:_ (_🚫 FOR TEAM MEMBERS ONLY_)
