@@ -7,9 +7,9 @@
     
     /* Dark Theme Colors inspired from Django project */
     --primary-back-color: #1f1f1f;      /* main background */
-    --secondary-back-color: #2a2a2a;    /* cards, panels */
-    --primary-fore-color: #29fd53;      /* bright accent */
-    --primary-text-color: #c0ced8;      /* light text on dark bg */
+    --secondary-back-color: #222222;    /* cards, panels */
+    --primary-fore-color: rgb(5, 155, 155);      /* bright accent */
+    --primary-text-color: #eae7e7;      /* light text on dark bg */
     --secondary-text-color: #ffffffcc;  /* secondary text */
     --error-color: crimson;
 }
