@@ -14,6 +14,9 @@ function Polls() {
     // initial state array for error*
     const [error, setError] = useState(null);
 
+    // initial state array for filter
+    const [selectedFilter, setSelectedFilter] = useState("all");
+
     // handle the API-call
     useEffect(function() {
 
@@ -32,6 +35,8 @@ function Polls() {
                     // throw error
                     throw new Error("Polls Fetch Request Failed!")
                 }
+
+                // console.log(pollsResponse);
 
                 // get the data
                 const pollsData = await pollsResponse.json();
@@ -64,23 +69,63 @@ function Polls() {
         fetchAllPolls();
     }, []);
 
+    // () -> handle polls filtering
+    function handlePollsFilter() {
+        if (selectedFilter === "new") {
+            return [...polls].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        }
+
+        if (selectedFilter === "trending") {
+            return [...polls].sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0));
+        }
+
+        return polls; // default → all
+    }
+
+    // grab the filtered polls
+    const filteredPolls = handlePollsFilter(); 
 
 
   return (
-    <main className="app-content polls-page">
+    <main className="polls-page">
 
     {isLoading && <p>Loading polls...</p>}
     {error && <p style={{ color: "red" }}>{error}</p>}
 
-    {/* Polls Content  */}
+    {/* filter-section */}
+    <div className="polls-filter-bar">
+        <button 
+          onClick={() => setSelectedFilter("all")} 
+          disabled={selectedFilter === "all"} 
+          className={`polls-filter-btn ${selectedFilter === "all" ? "active" : ""}`}
+          >
+           🌐 All
+        </button>
+        <button 
+          onClick={() => setSelectedFilter("new")} 
+          disabled={selectedFilter === "new"}
+          className={`polls-filter-btn ${selectedFilter === "new" ? "active" : ""}`}
+        >
+            🆕 New
+        </button>
+        <button 
+          onClick={() => setSelectedFilter("trending")} 
+          disabled={selectedFilter === "trending"}
+          className={`polls-filter-btn ${selectedFilter === "trending" ? "active" : ""}`}
+        >
+           🔥 Trending
+        </button>
+    </div>
+
+      {/* Polls Content  */}
       <div className="polls-grid">
 
         {/* Each Poll Card */}
-        {polls.map((poll) => (
+        {filteredPolls.map((poll) => (
           <section key={poll.id} className="polls-card">
             <div className="polls-card-content">
               <div className="icon">
-                📊
+                📝
               </div>
               <div className="text">
                 <h2>
@@ -99,7 +144,7 @@ function Polls() {
               </div>
               <div className="result">
                 <Link to={`/poll-result/${poll.id}`}>
-                  📋
+                  🔍
                 </Link>
               </div>
             </div>
