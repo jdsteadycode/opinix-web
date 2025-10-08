@@ -127,3 +127,28 @@ exports.login = async (req, res) => {
   }
 };
 
+
+// In-memory blacklist (clears on server restart)
+const blacklistedTokens = new Set();  
+
+// logout module
+exports.logout = (req, res) => {
+  // get token
+  const authHeader = req.headers.authorization;
+
+  // check if token is present or not?
+  if (!authHeader) {
+    return res.status(400).json({ message: "No token provided" });
+  }
+
+  // grab token
+  const token = authHeader.split(" ")[1];
+  blacklistedTokens.add(token);      // add token to blacklist
+
+  // send response to client
+  res.json({ message: "Logout successful" });
+};
+
+// Export a helper to check if token is blacklisted
+exports.isBlacklisted = (token) => blacklistedTokens.has(token);
+
