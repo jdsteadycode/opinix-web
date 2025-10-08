@@ -180,14 +180,17 @@ exports.allPolls = async (request, response) => {
         // grab all the polls
         let [polls] = await pool.query(
             `
-                SELECT polls.*, users.username, poll_category.name AS category, GROUP_CONCAT(tags.name) AS tags 
+                SELECT polls.*, users.username, poll_category.name AS category,
+                    GROUP_CONCAT(tags.name) AS tags,
+                    COUNT(votes.id) AS vote_count
                 FROM polls
-                INNER JOIN users ON (users.id = polls.user_id)
-                LEFT JOIN poll_category ON (poll_category.id = polls.category_id)
-                LEFT JOIN poll_tags ON (poll_tags.poll_id = polls.id)
-                LEFT JOIN tags ON (tags.id = poll_tags.tag_id)
+                INNER JOIN users ON users.id = polls.user_id
+                LEFT JOIN poll_category ON poll_category.id = polls.category_id
+                LEFT JOIN poll_tags ON poll_tags.poll_id = polls.id
+                LEFT JOIN tags ON tags.id = poll_tags.tag_id
+                LEFT JOIN votes ON votes.poll_id = polls.id
                 GROUP BY polls.id
-                ORDER BY polls.created_at DESC;
+                ORDER BY polls.created_at ASC;
             `
         );
 
