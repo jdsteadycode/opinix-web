@@ -39,7 +39,7 @@ function PollResult() {
       {/* charts-container */}
       <section className="charts-container">
         {/* Bar Chart */}
-        <div className="chart-box">
+        <section className="chart-box">
           <h3>Bar Chart</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={pollResult.voteSummary}>
@@ -51,7 +51,7 @@ function PollResult() {
               <Bar dataKey="votes_count" fill="#00C49F" barSize={40} />
             </BarChart>
           </ResponsiveContainer>
-        </div>
+        </section>
 
         {/* Pie Chart */}
         <div className="chart-box">
