@@ -1,3 +1,4 @@
+// grab modules.
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +16,9 @@ function CreatePoll() {
   ]);
   const [hoveredOptionIndex, setHoveredOptionIndex] = useState(null);
   const [errors, setErrors] = useState({});
+
+  // initial state array for toast box style...
+  const [toastStyle, setToastStyle] = useState("block");
 
   // () -> handle option text
   function handleOptionChange(value, id) {
@@ -126,6 +130,10 @@ function CreatePoll() {
     setErrors(newErrors);
     if (Object.keys(newErrors).length) return; // stop if any errors
 
+
+
+
+
     // format expiry date for backend
     const d = new Date(expires_at_raw);
     const pad = (n) => String(n).padStart(2, "0");
@@ -154,8 +162,49 @@ function CreatePoll() {
       .filter(Boolean);
     tags.forEach((tag, idx) => formData.append(`tags[${idx}]`, tag));
 
+    // plain options with text for moderation in poll!
+    const plainOptions = pollOptions.map((option) => ({"text": option.text}));
+
     // try safely*
     try {
+
+      // update the state
+      setSuccessMessage("⏳ Checking poll content for safety...");
+
+      // interact with moderation-api
+      const moderationRes = await fetch("http://localhost:5000/api/poll/moderate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          description,
+          options: plainOptions,
+          tags
+        })
+      });
+
+      // grab ai response
+      const moderationData = await moderationRes.json();
+
+      const isUnsafe =
+        !moderationRes.ok ||
+        !moderationData.status ||
+        moderationData.message?.toUpperCase() === "UNSAFE";
+
+      // check response
+      if (isUnsafe) {
+        // update state
+        setSuccessMessage("❌ Poll rejected: Unsafe content detected!");
+
+        // update state after 3 seconds delay
+        setTimeout(() => setSuccessMessage(""), 3000);
+
+        // stop the execution here..
+        return; 
+      }
+
+      // otherwise continue with poll creation...
+      setSuccessMessage("✅ Content safe! Creating poll...");
 
      // make the request
       const res = await fetch("http://localhost:5000/api/poll/create", {
@@ -200,6 +249,19 @@ function CreatePoll() {
 
       {/* create-poll-form */}
       <form className="create-poll-form" onSubmit={handlePollCreation}>
+        {/* initial rule */}
+        {toastStyle === "block" && (
+          <section className="create-poll-warning" style={{display: toastStyle}}>
+                    <i className="ri-close-line"
+                        onClick={(e => setToastStyle("none"))}
+                    >
+                    </i>
+                    <h2>WARNING</h2>   
+                    <p>Your poll creation details will be verified by AI to check harmful content*</p>
+                    <b>NOTE: AI can do mistakes, so please go through content before creating poll...</b> 
+                </section>
+        )}
+
         <h1>Get started</h1>
 
         <div className="input-box">
