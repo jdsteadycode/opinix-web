@@ -13,7 +13,21 @@ function Header({ isUser, handleAuth, handleId }) {
     const navigate = useNavigate();
 
     // () -> authentication of user
-    function handleLogout() {
+    async function handleLogout() {
+
+        // get the token
+        const token = localStorage.getItem("token");
+
+        // make the user logout
+       const logoutUser = await fetch("http://localhost:5000/api/auth/logout", {
+            "method": "POST",
+            "headers": {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        // check log**
+        console.log(logoutUser);
         
         // dismantle the token
         localStorage.removeItem("token");
