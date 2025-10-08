@@ -118,6 +118,7 @@ exports.me = async (req, res) => {
 exports.updateMe = async (req, res) => {
     // grab the data for update
     const { id, nickname, bio, gender, phone, birthdate} = req.body;
+    // console.log(req.file);
 
     try {
         // check log**
