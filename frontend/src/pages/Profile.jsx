@@ -58,6 +58,10 @@ function Profile() {
 
             // FormData as data contains file as well!
             const fData = new FormData();
+
+            // send id as well
+            // fData.append("id", user?.id);
+
             Object.entries(formData).forEach(([key, value]) => {
                 if (value !== null && value !== undefined) {
                     if (key === "profileImage") {
