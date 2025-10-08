@@ -109,7 +109,7 @@ function Poll({ user_id }) {
                 // get the data
                 const data = await pastResponse.json();
 
-                console.log("Hello from can or not vote?", data);
+                console.log("Response from canVote/? ", data);
 
                 // update the state**
                 setCanVote(data?.status);
