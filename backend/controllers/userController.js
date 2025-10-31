@@ -164,3 +164,72 @@ exports.updateMe = async (req, res) => {
     }
 };
 
+// () -> get all created polls..
+exports.getUserPolls = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Verify user exists (optional but good practice)
+    const [user] = await pool.query(`SELECT id FROM users WHERE id = ?`, [userId]);
+    if (user.length === 0)
+      return res.status(404).json({ status: false, message: "User not found" });
+
+    // Fetch polls created by this user (include soft-deleted for admin view if needed)
+    const [polls] = await pool.query(`
+      SELECT 
+        id, 
+        title, 
+        description,
+        status,
+        is_active,
+        created_at,
+        updated_at
+      FROM polls
+      WHERE user_id = ?
+      ORDER BY created_at DESC
+    `, [userId]);
+
+    res.json({ status: true, data: polls });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ status: false, message: "Failed to fetch user's polls" });
+  }
+};
+
+// () -> delete user created poll..pool
+exports.deletePoll = async (req, res) => {
+  const pollId = req.params.pollId;
+  const { userId } = req.body;
+
+  try {
+    // 1️⃣ Check if the poll belongs to the user
+    const [poll] = await pool.query(
+      "SELECT * FROM polls WHERE id=? AND user_id=?",
+      [pollId, userId]
+    );
+    if (!poll) return res.status(404).json({ message: "Poll not found or unauthorized" });
+
+    // 2️⃣ Soft delete the poll by setting is_active = 0
+    await pool.query("UPDATE polls SET is_active = 0, status='archived' WHERE id = ?", [pollId]);
+
+    // 3️⃣ Optional: you can also keep votes/poll_options intact or archive them separately if needed
+
+    res.json({ message: "Poll has been archived (soft deleted) successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+// () -> get all users (admin-only)
+exports.getAllUsers = async (req, res) => {
+  try {
+    console.log(req.user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: false, message: "Server error", error });
+  }
+};
+
+
+
