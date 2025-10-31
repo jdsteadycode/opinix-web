@@ -12,6 +12,9 @@ import { Profile } from "./pages/Profile.jsx";
 import { Polls } from "./pages/Polls.jsx";
 import { Poll } from "./pages/Poll.jsx";
 import { PollResult } from "./pages/PollResult.jsx";
+import { VotedPolls } from "./pages/VotedPolls.jsx";
+import  { CreateAdmin } from "./pages/CreateAdmin.jsx";
+import { Admin } from "./pages/Admin.jsx";
 import './App.css';
 
 // () -> App Component
@@ -19,7 +22,7 @@ function App() {
 
   // initial state array for authentication
   const [isUser, setIsUser] = useState(!!localStorage.getItem("token"));
-  const [id, setId] = useState(null);
+  const [id, setId] = useState(localStorage.getItem("uId"));
 
   // () -> handle the incoming changes logout/ un-set or set id!
   function handleAuth(incomingStatus) {
@@ -47,7 +50,7 @@ function App() {
           <Header isUser={isUser} handleAuth={handleAuth} handleId={handleId} />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/polls" element={<Polls />} />
+            <Route path="/polls" element={<Polls user_id={id} />} />
             <Route path="/poll/:id" element={<Poll user_id={id} />}
             />
             <Route path="/poll-result/:id" element={<PollResult />}
@@ -60,6 +63,23 @@ function App() {
             <Route path="/profile" element={
               <SecuredRoute pages={<Profile />} />
             } />
+            <Route
+              path="/admin"
+              element={
+                <SecuredRoute 
+                  roleRequired={"admin"}
+                  pages={<Admin />}
+                />
+              }
+            />
+            <Route 
+              path="/voted-polls/:uId"
+              element={
+                <SecuredRoute
+                  pages={<VotedPolls />}
+                />
+              }
+            />
           </Routes>
         </section>
       </Router>
