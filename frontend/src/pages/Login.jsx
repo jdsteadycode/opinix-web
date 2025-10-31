@@ -15,7 +15,6 @@ function Login({ handleAuth, handleId }) {
     // initial state array for errors
     let [error, setError] = useState(null);
 
-
     // initial navigation instance
     let navigate = useNavigate();
 
@@ -81,13 +80,19 @@ function Login({ handleAuth, handleId }) {
                 // store the token safely in client**
                 localStorage.setItem("token", data.token);
 
+                // store the user-id in client**
+                localStorage.setItem("uId", data?.user?.id);
+
+                // store the role as well in client**
+                localStorage.setItem("role", data?.user?.role);
+
                 // notify the App
                 // update prop function
                 handleAuth(true);
                 handleId(data.user?.id)
 
-                // redirect the user to Main Page
-                navigate("/");
+                // redirect the user according to role of his/her..
+                data.user?.role === "admin" ?  navigate("/admin") : navigate("/");
 
                 // update the state*
                 setError(null);
@@ -108,7 +113,13 @@ function Login({ handleAuth, handleId }) {
     return( 
         <main className="app-auth-content">
             <form className="auth-form" onSubmit={handleLogin}>
+
+                {/* Error message */}
+                {error && <p className="message">{error}</p>}
+
+                {/* heading */}
                 <h1>Hi there</h1>
+
 
                 {/* Email input */}
                 <div className="input-box">
@@ -132,8 +143,7 @@ function Login({ handleAuth, handleId }) {
                     <label>Password</label>
                 </div>
 
-                {/* Error message */}
-                {error && <p className="message">{error}</p>}
+                
 
                 {/* Register link */}
                 <p className="auth-register">
