@@ -25,6 +25,9 @@ function PollResult() {
   }
   , [id]);
 
+  // check log**
+  console.log(pollResult);
+
   // until the stats load...
   if (!pollResult) return <h1 className="loading-text">Sit tight...</h1>;
 
@@ -84,7 +87,7 @@ function PollResult() {
 
       {/* Back button */}
       <div className="btn-align">
-        <Link to="/">
+        <Link to="/polls">
           <button className="back-btn">
             <i className="fa-solid fa-arrow-left"></i> Back
           </button>
