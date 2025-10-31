@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
     console.log("FILE:", req.file);
 
     // get the client-data from form-body
-    const { email, username, nickname, bio, phone, password, confirmPassword, gender, birthdate } = req.body;
+    const { email, username, nickname, bio, phone, password, confirmPassword, gender, birthdate, role } = req.body;
 
     // initial profile-image
     let profileImage = null;
@@ -49,13 +49,13 @@ exports.register = async (req, res) => {
     // FIRE DML COMMAND
     // ensured `null` values even if data doesn't completely come...
     await pool.execute(
-      `INSERT INTO users (email, username, nickname, bio, phone, password_hash, gender, birthdate, profile_image)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [email, username, nickname || username, bio || null, phone || null, hashedPassword, gender || null, birthdate || null, profileImage]
+      `INSERT INTO users (email, username, nickname, bio, phone, password_hash, gender, birthdate, profile_image, role)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [email, username, nickname || username, bio || null, phone || null, hashedPassword, gender || null, birthdate || null, profileImage || null, role]
     );
 
 
-    // when successfull
+    // when successfull..
     res.status(201).json({ message: `${username} just got registered`, status: true });
 
   }
@@ -86,7 +86,7 @@ exports.login = async (req, res) => {
     if (rows.length === 0) {
 
       // throw client toast
-      return res.status(400).json({ message: "OOPS user ain't found!" });
+      return res.status(400).json({ message: "User not found.", status: false });
     }
 
     // get the user-data
@@ -97,13 +97,13 @@ exports.login = async (req, res) => {
     if (!isMatch) {
 
       // throw toast
-      return res.status(400).json({ message: "INVALID E-MAIL OR PASSWORD" });
+      return res.status(400).json({ message: "INVALID E-MAIL OR PASSWORD", status: false });
     }
 
     // create secure-token for authenticated user
     // and send it with user...
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '27d' }
     );
@@ -116,6 +116,7 @@ exports.login = async (req, res) => {
         id: user.id,
         email: user.email,
         username: user.username,
+        role: user.role
       }
     });
       
@@ -123,10 +124,9 @@ exports.login = async (req, res) => {
   // throw toast when error occurs
   catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error', status: false });
   }
 };
-
 
 // In-memory blacklist (clears on server restart)
 const blacklistedTokens = new Set();  
