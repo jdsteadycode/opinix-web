@@ -1,9 +1,15 @@
 // grab module(s)
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // () -> Poll Component (all polls)
-function Polls() {
+function Polls({ user_id }) {
+
+    // check log incoming id?
+    console.log(user_id);
+
+    // handle navigation..
+    const navigate = useNavigate();
 
     // initial state array for polls*
     const [polls, setPolls] = useState([]);
@@ -85,35 +91,52 @@ function Polls() {
     // grab the filtered polls
     const filteredPolls = handlePollsFilter(); 
 
+    // () -> handle navigation to voted polls!
+    function navigateToVotedPolls(event) {
 
+      // redirect the user to voted-polls page..
+      navigate(`/voted-polls/${user_id}`);
+    }
+
+  // returns jsx..
   return (
     <main className="polls-page">
-
+    
+    {/* when loading..  */}
     {isLoading && <p>Loading polls...</p>}
+
+    {/* when error..  */}
     {error && <p style={{ color: "red" }}>{error}</p>}
 
     {/* filter-section */}
     <div className="polls-filter-bar">
         <button 
-          onClick={() => setSelectedFilter("all")} 
+          onClick={(e) => setSelectedFilter("all")} 
           disabled={selectedFilter === "all"} 
           className={`polls-filter-btn ${selectedFilter === "all" ? "active" : ""}`}
           >
            🌐 All
         </button>
         <button 
-          onClick={() => setSelectedFilter("new")} 
+          onClick={(e) => setSelectedFilter("new")} 
           disabled={selectedFilter === "new"}
           className={`polls-filter-btn ${selectedFilter === "new" ? "active" : ""}`}
         >
             🆕 New
         </button>
         <button 
-          onClick={() => setSelectedFilter("trending")} 
+          onClick={(e) => setSelectedFilter("trending")} 
           disabled={selectedFilter === "trending"}
           className={`polls-filter-btn ${selectedFilter === "trending" ? "active" : ""}`}
         >
            🔥 Trending
+        </button>
+        <button 
+          onClick={navigateToVotedPolls} 
+          disabled={typeof(user_id) !== "number" && user_id == null}
+          className={`polls-filter-btn ${selectedFilter === "voted" ? "active" : ""}`}
+        >
+           💯 Voted
         </button>
     </div>
 
@@ -133,7 +156,11 @@ function Polls() {
                 </h2>
                 <p className="desc">{poll.description}</p>
                 <div className="meta">
-                  <span>#{poll.category}</span> · <span>by {poll.username}</span>
+                 · <span>by {poll.username}</span>
+                </div>
+                <div className="poll-tags">
+                  {[...new Set([...poll.tags])]
+                  .map((tag, index) => <span className="tag" key={index}># {tag} </span>)}
                 </div>
               </div>
             </div>
