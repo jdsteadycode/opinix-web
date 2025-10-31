@@ -106,7 +106,7 @@ function CreatePoll() {
     const category_name = event.target.category.value;
     const pollType =
       event.target.type.value === "Single Choice" ? "single" : "multi";
-    const allow_comments = event.target["allow-comments"].value;
+    // const allow_comments = event.target["allow-comments"].value;
     const expires_at_raw = event.target.expiryDate.value;
 
     // initial errors
@@ -145,7 +145,7 @@ function CreatePoll() {
     formData.append("user_id", user_id);
     formData.append("category_name", category_name);
     formData.append("poll_type", pollType);
-    formData.append("allow_comments", allow_comments);
+    // formData.append("allow_comments", allow_comments);
     formData.append("max_choices", pollOptions.length);
     formData.append("expires_at", expires_at);
 
@@ -256,9 +256,9 @@ function CreatePoll() {
                         onClick={(e => setToastStyle("none"))}
                     >
                     </i>
-                    <h2>WARNING</h2>   
+                    <h2>WARNING</h2>
                     <p>Your poll creation details will be verified by AI to check harmful content*</p>
-                    <b>NOTE: AI can do mistakes, so please go through content before creating poll...</b> 
+                    <b>*NOTE: AI CAN MAKE MISTAKES*</b> 
                 </section>
         )}
 
@@ -358,47 +358,35 @@ function CreatePoll() {
 
         <div className="input-box">
           <input
-              name="expiryDate"
-              type={inputType}
-              placeholder="Expiry Date ? "
-              onFocus={handleInputFocusTextChange}
-              min={(() => {
-                const now = new Date();
-                const pad = (n) => String(n).padStart(2, "0");
-                return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(
-                  now.getDate()
-                )}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
-              })()}
-              max={(() => {
-                const now = new Date();
-                const endOfMonth = new Date(
-                  now.getFullYear(),
-                  now.getMonth() + 1,
-                  0,
-                  23,
-                  59
-                );
-                const pad = (n) => String(n).padStart(2, "0");
-                return `${endOfMonth.getFullYear()}-${pad(
-                  endOfMonth.getMonth() + 1
-                )}-${pad(endOfMonth.getDate())}T${pad(
-                  endOfMonth.getHours()
-                )}:${pad(endOfMonth.getMinutes())}`;
-              })()}
-            />
+            name="expiryDate"
+            type="datetime-local"
+            placeholder="Expiry Date ?"
+            min={(() => {
+              const now = new Date();
+              const pad = (n) => String(n).padStart(2, "0");
+              return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+            })()}
+            max={(() => {
+              const now = new Date();
+              const future = new Date();
+              future.setMonth(now.getMonth() + 3);
+              const pad = (n) => String(n).padStart(2, "0");
+              return `${future.getFullYear()}-${pad(future.getMonth() + 1)}-${pad(future.getDate())}T23:59`;
+            })()}
+          />
             {errors.expiry && <span className="error">{errors.expiry}</span>}
         </div>
 
 
         <div className="input-box">
-          <input name="tags" type="text" placeholder="Tags (tech, fun, etc…)" />
+          <input name="tags" type="text" placeholder="Tags please comma separated [EX: gk, country]" />
         </div>
 
-        <div className="poll-comments">
+        {/* <div className="poll-comments">
           <label>Allow comments</label>
           <input type="radio" name="allow-comments" value={1} /> Yes
           <input type="radio" name="allow-comments" value={0} /> No
-        </div>
+        </div> */}
 
         <button className="create-btn" type="submit">
           Create!
