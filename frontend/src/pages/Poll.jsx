@@ -29,8 +29,16 @@ function Poll({ user_id }) {
     // initial state array for voting.
     const [isVoting, setIsVoting] = useState(false);
 
+    // initial state array for menu..
+    const [showMenu, setShowMenu] = useState(false);
+
     // initial state array for toast box style...
     const [toastStyle, setToastStyle] = useState("block");
+
+    const [showReportModal, setShowReportModal] = useState(false);
+    const [reportReason, setReportReason] = useState("");
+    const [reportDetails, setReportDetails] = useState("");
+    const [isReporting, setIsReporting] = useState(false);
 
     // handle the API-call
     useEffect(function() {
@@ -155,7 +163,7 @@ function Poll({ user_id }) {
     console.log(selectedOptions);
   };
 
-  // dummy submit handler
+  // handle vote submission..
   const handleVote = () => {
 
     // check log**
@@ -213,6 +221,42 @@ function Poll({ user_id }) {
     castTheVote(user_id, pollDetails?.id, selectedOptions);
   };
 
+
+  // () -> handle report the poll..
+   const submitReport = async () => {
+    if (!reportReason) {
+      alert("Please select a reason before submitting!");
+      return;
+    }
+
+    try {
+      setIsReporting(true);
+      const response = await fetch(`http://localhost:5000/api/poll/report`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          pollId: pollDetails.id,
+          userId: user_id,
+          reason: reportReason,
+          details: reportDetails,
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Report submitted:", data);
+      alert("Report submitted successfully!");
+      setShowReportModal(false);
+      setReportReason("");
+      setReportDetails("");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to submit report!");
+    } finally {
+      setIsReporting(false);
+    }
+  };
+
+
   // returns jsx.
   return (
     <main className="app-content">
@@ -226,7 +270,9 @@ function Poll({ user_id }) {
             <div className="poll-card">
                 
                 {/* toast */}
-                {user_id == null && <section className="cannot-vote" style={{display: toastStyle}}>
+                {user_id == null 
+                    &&
+                 <section className="cannot-vote" style={{display: toastStyle}}>
                     <i className="ri-close-line"
                         onClick={(e => setToastStyle("none"))}
                     >
@@ -251,6 +297,21 @@ function Poll({ user_id }) {
                             </Link>    
                     </p> 
                 </section>}
+
+                {/* poll menu */}
+                <div className="poll-menu">
+                    <button
+                    className="menu-btn"
+                    onClick={() => setShowMenu((prev) => !prev)}
+                    >
+                    ⋮
+                    </button>
+                    {showMenu && (
+                    <ul className="menu-dropdown">
+                        <li onClick={() => setShowReportModal(true)}>🚩 Report this Poll</li>
+                    </ul>
+                    )}
+                </div>
                 
                 {/* Poll's Title */}
                 <h2>{pollDetails.title}</h2>
@@ -316,6 +377,54 @@ function Poll({ user_id }) {
                 </form>
             </div>
       </section>
+
+      {/* Report Modal */}
+      {showReportModal && (
+        <div className="profile-overlay">
+          <div className="profile-modal">
+            <h2 style={{color: "#fff"}}>🚩 Report this Poll</h2>
+
+            <label>Reason</label>
+            <select
+              value={reportReason}
+              onChange={(e) => setReportReason(e.target.value)}
+            >
+              <option value="">Select Reason</option>
+              <option value="Spam">Spam</option>
+              <option value="Inappropriate Content">Inappropriate Content</option>
+              <option value="Misinformation">Misinformation</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <label>Additional Details (optional)</label>
+            <textarea
+              rows="3"
+              value={reportDetails}
+              onChange={(e) => setReportDetails(e.target.value)}
+              placeholder="Provide more details if necessary..."
+            ></textarea>
+
+            <div className="modal-actions">
+              <button
+                style={{
+                    backgroundColor: "#D94446"
+                }}
+                className="save-btn"
+                onClick={submitReport}
+                disabled={isReporting}
+              >
+                {isReporting ? "Reporting..." : "Report"}
+              </button>
+              <button
+                className="cancel-btn"
+                onClick={() => setShowReportModal(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
