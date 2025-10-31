@@ -29,7 +29,15 @@ async function moderatePoll(request, response, next) {
         console.log(combinedText);
         
         // set the prompt for ai..,
-        const prompt = `Classify this poll content (title + description + options + tags) into SAFE or UNSAFE (hate / violence / self-harm / suicide / illegal / slaughter / vulgar): "${combinedText}"`;
+        const prompt = `
+        You are a strict content moderation model. 
+        Analyze the following poll text and reply ONLY with one word:
+        "SAFE" if the content is appropriate,
+        or "UNSAFE" if it contains or implies hate, violence, self-harm, illegal activity, vulgarity, or explicit material.
+
+        Poll content:
+        "${combinedText}"
+        `;
 
 
         try {
