@@ -7,15 +7,15 @@ const pool = require('../config/db');
 exports.castVote = async (request, response) => {
 
     // grab the incoming data**
-    const {pollId} = request.params;
-    const {selectedOptions, userId} = request.body;
+    const { pollId } = request.params;
+    const { selectedOptions, userId } = request.body;
 
     // ensure authorization!!
     // check for the user-id?
-    if(!userId) return response.status(400).json({"message": "Access denied!"});
+    if (!userId) return response.status(400).json({ "message": "Access denied!" });
 
     // check the incoming options?
-    if(!Array.isArray(selectedOptions) || selectedOptions.length == 0) return response.status(400).json({"message": "No options selected!"});
+    if (!Array.isArray(selectedOptions) || selectedOptions.length == 0) return response.status(400).json({ "message": "No options selected!" });
 
     // safe 
     try {
@@ -31,7 +31,7 @@ exports.castVote = async (request, response) => {
         );
 
         // when poll doesn't exist!
-        if(pollRows.length == 0) return response.status(404).json({"message": "OOPS! No Poll Found OR In-active"});
+        if (pollRows.length == 0) return response.status(404).json({ "message": "OOPS! No Poll Found OR In-active" });
 
         // grab the poll-data
         const poll = pollRows[0];
@@ -40,10 +40,10 @@ exports.castVote = async (request, response) => {
         console.log(poll);
 
         // handle poll-options selection!!
-        if(poll.poll_type === "single" && selectedOptions.length > 1) return response.status(400).json({"message": "Only one option selection is allowed"});
+        if (poll.poll_type === "single" && selectedOptions.length > 1) return response.status(400).json({ "message": "Only one option selection is allowed" });
 
         // for multi poll-type!
-        if(poll.poll_type === "multi" && selectedOptions.length > poll.max_choices) return response.status(400).json({"message": `Max ${poll.max_choices} choices only allowed!!`});
+        if (poll.poll_type === "multi" && selectedOptions.length > poll.max_choices) return response.status(400).json({ "message": `Max ${poll.max_choices} choices only allowed!!` });
 
 
         // check if user already voted or not?
@@ -55,9 +55,9 @@ exports.castVote = async (request, response) => {
             `,
             [userId, pollId]
         );
-        
+
         // when already voted!
-        if(votes.length > 0) return response.status(409).json({"message": "You've already casted your vote!"});
+        if (votes.length > 0) return response.status(409).json({ "message": "You've already casted your vote!" });
 
 
         // save the vote-casting of the user
@@ -75,7 +75,7 @@ exports.castVote = async (request, response) => {
         const voteId = voteOutcome.insertId;
 
         // if multi-votes then,
-        if(poll.poll_type === "multi") {
+        if (poll.poll_type === "multi") {
 
             // grab the vote_id and option_id in array
             const voteData = selectedOptions.map(optionId => [voteId, optionId]);
@@ -131,11 +131,11 @@ exports.castVote = async (request, response) => {
 exports.voted = async (request, response) => {
 
     // grab the incoming data**
-    const {userId, pollId} = request.body;
+    const { userId, pollId } = request.body;
 
     // ensure authorization!!
     // check for the user-id?
-    if(!userId) return response.status(400).json({"message": "Access denied!"});
+    if (!userId) return response.status(400).json({ "message": "Access denied!" });
 
     // safe 
     try {
@@ -151,14 +151,14 @@ exports.voted = async (request, response) => {
         );
 
         // check if user actually voted!
-        if(pastCastings.length > 0) {
-           // send the response to the Frontend/ Client
-           return response.status(409).json({"message": "You've already casted your vote!", "status": false});
+        if (pastCastings.length > 0) {
+            // send the response to the Frontend/ Client
+            return response.status(409).json({ "message": "You've already casted your vote!", "status": false });
         }
         // otherwise, let user-proceed further
         else {
             // send the response to the Frontend/ Client
-            return response.status(202).json({"message": "No vote from your end!", "status": true});
+            return response.status(202).json({ "message": "No vote from your end!", "status": true });
         }
     }
 
@@ -176,5 +176,49 @@ exports.voted = async (request, response) => {
     finally {
         // log the message**
         console.log("Task completed");
+    }
+}
+
+// revoke the already voted poll!
+exports.revokeVote = async (request, response) => {
+
+    // get the poll-id and user-id for further process..
+    const { pollId, userId } = request.body;
+    
+    // check log**
+    // console.log(pollId, userId);
+
+    // try safely..
+    try {
+
+        // 1. delete vote choices
+        await pool.query(
+            `DELETE vc FROM vote_choices vc
+             JOIN votes v ON vc.vote_id = v.id
+             WHERE v.user_id = ? AND v.poll_id = ?`,
+             [userId, pollId]
+        );
+
+        // 2. delete vote
+        const [result] = await pool.query(
+            `DELETE 
+             FROM votes 
+             WHERE user_id = ? AND poll_id = ?`,
+             [userId, pollId]
+        );
+
+        // check if vote was removed..
+        if (result.affectedRows > 0) {
+            response.json({ status: true, message: "Vote revoked successfully!" });
+        } 
+
+
+        // otherwise, no vote found!    
+        else {
+            response.status(404).json({ status: false, message: "No vote found!" });
+        }
+    } catch (err) {
+        console.error(err);
+        response.status(500).json({ status: false, message: "Vote revoke failed!" });
     }
 }
