@@ -29,8 +29,10 @@ function Header({ isUser, handleAuth, handleId }) {
         // check log**
         console.log(logoutUser);
         
-        // dismantle the token
-        localStorage.removeItem("token");
+        // dismantle the token as well as id?
+        localStorage.removeItem("token");   
+        localStorage.removeItem("uId");
+
 
         // notify App
         // update state via prop-function
