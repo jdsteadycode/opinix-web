@@ -1,33 +1,53 @@
 <p align="center">
   <img src="./frontend/public/opinix-high-resolution-logo.png" alt="Opinix Logo" width="750" height="475"/>
 </p>
+<h2 align="center">🗳️ <strong>OPINIX WEB</strong></h2>
 
-### **🗳️ OPINIX WEB**
+_Opinix_ is a **secure, web-based opinion (poll) application**, where folks can create and take part in various polls online.
 
-_Opinix_ is a secure web based opinion (poll) application, where folks can create and take part in various polls online.
+---
 
-## **📌 WHAT'S IN THE BOX**
+## 📦 **WHAT'S IN THE BOX**
 
-- create polls on various _topics_
-- _Once vote_ per poll.
-- _Bookmark_ poll as one likes
-- _Trending_ polls i.e., what's in the buzz online.
+✨ Features that make Opinix engaging:
 
-## **⚙️ TECH STACK**
+- 📝 Create polls on various _topics_
+- 🗳️ Cast _one vote per poll_
+- 🔖 _Bookmark_ polls you like
+- 📈 View _trending polls_ — what’s buzzing online
 
-Opinix is built on following technologies so far:-
+---
 
-- _💻 FRONTEND:_
+## ⚙️ **TECH STACK**
 
-  - _HTML:_ for structuring the poll content
-  - _CSS:_ for styling and crafting the poll content
-  - _REACT.JS:_ (efficient and suitable JavaScript based Library) for adding interactivity and functionality of the poll content.
+Opinix is powered by the following technologies 👇
 
-- _⚒ BACKEND:_ (INTEGRATION IN-PROGRESS)
+### 💻 **Frontend**
 
-  - _NODE.JS:_ run-time environment for executing poll web on the server.
-  - _EXPRESS.JS:_ (Node.JS Framework) handles the requests from `frontend` of opinix and interacts with the `database` and returns the response.
+- 🧱 **HTML** — for structuring poll content
+- 🎨 **CSS** — for styling and crafting poll interfaces
+- ⚛️ **React.js** — JavaScript library for building interactive UI
 
-- _🗄 DATABASE:_ (Relational Database Management System) MYSQL for storing and managing the opinix polls data efficiently and easily.
+### 🛠️ **Backend**
 
-- _🚀 HOSTING:_ (TO BE DONE) Deployment/hosting details would be out after the accomplishmnent of development.
+- 🟢 **Node.js** — runtime environment for executing the web app on the server
+- 🚏 **Express.js** — Node.js framework that handles requests from the frontend, interacts with the database, and returns responses
+
+### 🤖 **AI Integration**
+
+- 🧠 **Ollama** — software for running LLMs locally on your device
+- 🤓 **Phi-3 Mini** — LLM used to verify poll content before creation
+
+### 🗄️ **Database**
+
+- 💾 **MySQL** — relational database for storing and managing Opinix poll data efficiently
+
+### 🚀 **Hosting**
+
+- 🌐 **(To Be Done)** — Deployment/hosting details will be shared after development is complete
+
+---
+
+<p align="center">
+  <em>🗳️ Opinix — Vote your voice, shape the buzz!</em>
+</p>
